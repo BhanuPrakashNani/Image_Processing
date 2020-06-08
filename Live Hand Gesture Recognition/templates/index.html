@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/home.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@800&family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Gesture Detection</title>
+  </head>
+  <body>
+    <div class= "header" >
+      <h1>Live Hand Gesture Detection</h1>
+      <a target="_blank" href="https://github.com/abhishekbvs/Gesture-Detection"><img height="32" width="32" src="https://cdn.jsdelivr.net/npm/simple-icons@v2/icons/github.svg"/></a>
+    </div>
+    
+    <div class= "main-frame" >
+      <img  src="{{ url_for('main_video_feed') }}">
+    </div>
+    <p>This application captures and interprets human gestures as numbers. Gesture here, 
+      can refer to any physical movement, large or small of the fingers. This project has been built using Python, OpenCV and Flask.
+      It is based on the concepts of object segmentation. It segments one foreground obeject which in this case 
+      is our hand, from a live video sequence.</p>
+  </body>
+</html>

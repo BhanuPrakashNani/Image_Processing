@@ -1,0 +1,27 @@
+body {
+    display:flex; 
+    flex-direction:column; 
+    min-height:95vh;
+    text-align: center;
+    padding: 20px 50px 0px;
+    background-color: #f0f5f9;
+}
+h1 {
+    font-family: 'Alegreya Sans', sans-serif;
+    float: center;
+}
+p {
+    font-family: 'Open Sans', sans-serif;
+}
+.header a{
+    display: inline;
+    float: right;
+}
+
+.header h1{
+    display: inline;
+}
+.main-frame{
+    filter: drop-shadow(5px 5px 5px #222); 
+    margin: 20px 10px 20px
+}
