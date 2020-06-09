@@ -21,3 +21,4 @@ th3 = cv2.adaptiveThreshold(blur,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_B
 cv2.imshow('Adaptive Gaussian', th3)
 cv2.imwrite('AG.jpg',th3)
 cv2.waitKey(0)
+cv2.destroyAllWindows()
