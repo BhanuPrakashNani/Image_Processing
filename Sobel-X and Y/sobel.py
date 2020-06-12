@@ -1,3 +1,5 @@
+#code resource - https://www.pyimagesearch.com/2016/07/25/convolutions-with-opencv-and-python/
+
 from skimage.exposure import rescale_intensity
 import numpy as np
 import argparse
