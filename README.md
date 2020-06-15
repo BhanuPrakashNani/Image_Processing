@@ -24,7 +24,16 @@ Image averaging is a DIP technique that is used to enhance the images which are 
 ![Image Averaging over set of N images](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/images/averaging.png)  
 
 ### 2. Successive Rotations
+The images are rotated using the self-defined code for rotation instead of the OpenCV inbuilt function. When an image is rotated by 45 degrees for 8 times, it does not produce the same result as when it is rotated by 90 degrees for 4 times. This is because, when an image is rotated 45 degrees, during the rotation more number of pixels values for the new position of the pixels is to be calculated. And calculating these new pixel positions and their intensities uses interpolation which are basically approximation methods. So when an image is rotated by 90 degrees there is a smoother transition since less no of approximations are to be made for the new pixel positions and their intensities. 
+
+A clear example is shown below
+
+Rotated by 45 deg - 8 times |Rotated by 45 deg - 8 times  
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Successive%20Rotations/rotated45.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Successive%20Rotations/rotated90.jpg)
+
 ### 3. Interpolations
+Interpolation is used in tasks such as zooming, shrinking, rotating, and geometrically correcting digital images. It is the process of using known data to estimate values at unknown locations.
 ### 4. Interpolation-Inverse Mapping
 ### 5. Basic Transformations
 ### 6. Perspective Transformation
