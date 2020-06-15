@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-img = cv2.imread('block.png')
+img = cv2.imread('panda.jpg', 0)
 (h,w) = img.shape[:2]
 center = (w/2, h/2)
 angle45 = 45
