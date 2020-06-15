@@ -9,6 +9,7 @@ There are two types of methods used for image processing namely, analogue and di
   * Enhancement and Display
   * Information Extraction.
   
+  Fundamental Steps in Digital Image Processing - Rafael Gonzalez - 4th Edition
   ![Fundamental Steps in DIP](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/images/DIP.png)
   [Src](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Digital_Image_Processing%2C_4th%20Edition-Rafael%20Gonzalez.pdf)
 
