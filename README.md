@@ -19,9 +19,9 @@ Forgetting deeper insights into any of the concepts, I suggest you to go through
 From here on I will be referring Digital Image Processing as DIP.
 
 The following is the order I suggest to look into the concepts.
-  1. Basics with Images - [Averaging Images](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Image%20Averaging)
-     Image averaging is a DIP technique that is used to enhance the images which are corrupted with random noise. The arithmetic mean of the intensity values for each pixel position is computed for a set of images of the same viewfield. The basic formula behind it is 
-     ![Image Averaging on set of N images]()
+### 1. Basics with Images - [Averaging Images](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Image%20Averaging)
+Image averaging is a DIP technique that is used to enhance the images which are corrupted with random noise. The arithmetic mean of the intensity values for each pixel position is computed for a set of images of the same viewfield. The basic formula behind it is.
+![Image Averaging on set of N images](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/images/averaging.png)
      
 
 ### Resources
