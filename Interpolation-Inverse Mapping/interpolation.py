@@ -54,6 +54,9 @@ for i in range(dimt[0]):
 cv2.imshow("original",img)
 cv2.imshow("NearestNeighbour",imgt)
 
+cv2.imwrite("original.jpg",img)
+cv2.imwrite("NearestNeighbour.jpg",imgt)
+
 #2
 for i in range(k):
 	newPos[i][0]+=(-minx[0])
@@ -86,5 +89,6 @@ for i in range(dimt[0]):
 		k+=1
 
 cv2.imshow("bilinear",imgt)
+cv2.imshow("bilinear.jpg",imgt)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
