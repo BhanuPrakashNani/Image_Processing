@@ -11,10 +11,21 @@ There are two types of methods used for image processing namely, analogue and di
 
 **Important point** to note while going through any concept is that the image is considered on a grey scale since color increases the complexity of the model. One may want to introduce an image processing tool using gray level images because of the "format" of gray level images because the inherent complexity of gray level images is lower than that of color images. In most cases. after presenting a gray-level image method, it can be be extended to color images.
 
-Forgetting deeper insights into any of the concepts, I suggest you to go through [Digital Image Processing, Rafael C. Gonzalez • Richard E. Woods, 4th Edition](https://www.pearson.com/us/higher-education/program/Gonzalez-Digital-Image-Processing-4th-Edition/PGM241219.html) 
+Forgetting deeper insights into any of the concepts, I suggest you to go through [Digital Image Processing, Rafael C. Gonzalez • Richard E. Woods, 4th Edition](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Digital_Image_Processing%2C_4th%20Edition-Rafael%20Gonzalez.pdf) 
 
 The following is the order I suggest to look into the concepts.
 1. 
+
+### Resources
+I am mentioning some of the resources which I found very usefulduring my learning stage.
+  1. [OpenCV Documentation](https://docs.opencv.org/master/)
+  2. [PyImageSearch Image Processing Archives](https://www.pyimagesearch.com/category/image-processing/)
+  3. [OpenCV Python Tutorials](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_table_of_contents_imgproc/py_table_of_contents_imgproc.html#py-table-of-content-imgproc)
+
+### Contributors
+I thank the contributors for helping with implementing few of the concepts.
+  * [Akhil Kolla](https://github.com/kolla47/)
+  * [Vishnu Priya](https://github.com/vishnu2112)
 
 ### License
 [MIT LICENSE](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/LICENSE.txt)
