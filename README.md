@@ -44,6 +44,12 @@ Here you can see a slight variation between the 3 images. The smoothness gets be
 ### 4. Interpolation-Inverse Mapping - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Interpolation-Inverse%20Mapping)
 As mentioned [here](https://www.cs.princeton.edu/courses/archive/fall00/cs426/papers/beier92.pdf), there are two methods of mapping, the first, called forward mapping, scans through the source image pixel by pixel, and copies them to the appropriate place in the destination image. The second, reverse mapping, goes through the destination image pixel by pixel, and samples the correct pixel from the source image. The most important feature of inverse mapping is that every pixel in the destination image gets set to something appropriate. In the forward mapping case, some pixels in the destination might not get painted, and would have to be interpolated. We calculate the image deformation as a reverse mapping.
 
+
+Original | Nearest Neighbour - Inverse Mapping  
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Interpolation-Inverse%20Mapping/original.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Interpolation-Inverse%20Mapping/NearestNeighbour.jpg)
+
+
 ### 5. Basic Transformations - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Basic%20Transformations)
 ### 6. Perspective Transformation
 ### 7. Est. Transformation
