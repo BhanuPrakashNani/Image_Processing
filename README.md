@@ -23,7 +23,7 @@ The following is the order I suggest to look into the concepts.
 Image averaging is a DIP technique that is used to enhance the images which are corrupted with random noise. The arithmetic mean of the intensity values for each pixel position is computed for a set of images of the same viewfield. The basic formula behind it is.  
 ![Image Averaging over set of N images](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/images/averaging.png)  
 
-### 2. Successive Rotations
+### 2. Successive Rotations - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Successive%20Rotations)
 The images are rotated using the self-defined code for rotation instead of the OpenCV inbuilt function. When an image is rotated by 45 degrees for 8 times, it does not produce the same result as when it is rotated by 90 degrees for 4 times. This is because, when an image is rotated 45 degrees, during the rotation more number of pixels values for the new position of the pixels is to be calculated. And calculating these new pixel positions and their intensities uses interpolation which are basically approximation methods. So when an image is rotated by 90 degrees there is a smoother transition since less no of approximations are to be made for the new pixel positions and their intensities. 
 
 A clear example is shown below
@@ -32,7 +32,7 @@ Rotated by 45 deg - 8 times |Rotated by 90 deg - 4 times
 :--------------------------:|:--------------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Successive%20Rotations/rotated45.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Successive%20Rotations/rotated90.jpg)
 
-### 3. Interpolations
+### 3. Interpolations - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Interpolations)
 Interpolation is used in tasks such as zooming, shrinking, rotating, and geometrically correcting digital images. It is the process of using known data to estimate values at unknown locations. So for giving the chance to estimate values, we will do some transformation, here it is rotation by 45 degrees. The 3 interpolations we see here are:
 
 Nearest Neighbour         |  Bilinear         |  Bicubic
@@ -41,7 +41,7 @@ Nearest Neighbour         |  Bilinear         |  Bicubic
 
 Here you can see a slight variation between the 3 images. The smoothness gets better from left to right. Since Bicubic interpolation uses a higher order equation it is able to capture features in depth.
 
-### 4. Interpolation-Inverse Mapping
+### 4. Interpolation-Inverse Mapping - [Code]()
 ### 5. Basic Transformations
 ### 6. Perspective Transformation
 ### 7. Est. Transformation
