@@ -27,18 +27,21 @@ rotated30 = cv2.warpAffine(img, M, (bound_w,bound_h))
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
-
 scale_percent = 110
-width = int(img.shape[1] * scale_percent / 100)
-height = int(img.shape[0] * scale_percent / 100)
+width = int(rotated30.shape[1] * scale_percent / 100)
+height = int(rotated30.shape[0] * scale_percent / 100)
 dim = (width, height)
 
-scaled = cv2.resize(img, dim, interpolation=cv2.INTER_NEAREST)
-scaled1 = cv2.resize(img, dim, interpolation=cv2.INTER_LINEAR)
-scaled2 = cv2.resize(img, dim, interpolation=cv2.INTER_CUBIC)
+scaled = cv2.resize(rotated30, dim, interpolation=cv2.INTER_NEAREST)
+scaled1 = cv2.resize(rotated30, dim, interpolation=cv2.INTER_LINEAR)
+scaled2 = cv2.resize(rotated30, dim, interpolation=cv2.INTER_CUBIC)
 
 cv2.imshow("Nearest Neighbour", scaled)
-cv2.imshow("Bilinear", scaled)
-cv2.imshow("Bicubic", scaled)
+cv2.imshow("Bilinear", scaled1)
+cv2.imshow("Bicubic", scaled2)
+
+cv2.imwrite("Nearest Neighbour.jpg", scaled)
+cv2.imwrite("Bilinear.jpg", scaled1)
+cv2.imwrite("Bicubic.jpg", scaled2)
 cv2.waitKey(0)
 cv2.destroyAllWindows() 
