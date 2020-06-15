@@ -16,8 +16,13 @@ There are two types of methods used for image processing namely, analogue and di
 
 Forgetting deeper insights into any of the concepts, I suggest you to go through [Digital Image Processing, Rafael C. Gonzalez • Richard E. Woods, 4th Edition](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Digital_Image_Processing%2C_4th%20Edition-Rafael%20Gonzalez.pdf) 
 
+From here on I will be referring Digital Image Processing as DIP.
+
 The following is the order I suggest to look into the concepts.
-1. 
+  1. Basics with Images - [Averaging Images](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Image%20Averaging)
+     Image averaging is a DIP technique that is used to enhance the images which are corrupted with random noise. The arithmetic mean of the intensity values for each pixel position is computed for a set of images of the same viewfield. The basic formula behind it is 
+     ![Image Averaging on set of N images]()
+     
 
 ### Resources
 I am mentioning some of the resources which I found very useful during my learning stage.
