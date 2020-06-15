@@ -28,7 +28,7 @@ The images are rotated using the self-defined code for rotation instead of the O
 
 A clear example is shown below
 
-Rotated by 45 deg - 8 times |Rotated by 45 deg - 8 times  
+Rotated by 45 deg - 8 times |Rotated by 90 deg - 4 times  
 :--------------------------:|:--------------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Successive%20Rotations/rotated45.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Successive%20Rotations/rotated90.jpg)
 
