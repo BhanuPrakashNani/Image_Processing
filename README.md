@@ -33,7 +33,14 @@ Rotated by 45 deg - 8 times |Rotated by 45 deg - 8 times
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Successive%20Rotations/rotated45.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Successive%20Rotations/rotated90.jpg)
 
 ### 3. Interpolations
-Interpolation is used in tasks such as zooming, shrinking, rotating, and geometrically correcting digital images. It is the process of using known data to estimate values at unknown locations.
+Interpolation is used in tasks such as zooming, shrinking, rotating, and geometrically correcting digital images. It is the process of using known data to estimate values at unknown locations. So for giving the chance to estimate values, we will do some transformation, here it is rotation by 45 degrees. The 3 interpolations we see here are:
+
+Nearest Neighbour         |  Bilinear         |  Bicubic
+:-------------------------:|:-------------------------:|:------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Interpolations/Nearest%20Neighbour.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Interpolations/Bilinear.jpg) | ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Interpolations/Bicubic.jpg)  
+
+Here you can see a slight variation between the 3 images. The smoothness gets better from left to right. Since Bicubic interpolation uses a higher order equation it is able to capture features in depth.
+
 ### 4. Interpolation-Inverse Mapping
 ### 5. Basic Transformations
 ### 6. Perspective Transformation
