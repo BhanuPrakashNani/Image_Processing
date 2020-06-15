@@ -38,5 +38,7 @@ for i in range(3):
 
 cv2.imshow('Rotated by 45 8 times', rotated45)
 cv2.imshow('Rotated by 90 4 times', rotated90)
+cv2.imwrite('rotated45.jpg',rotated45)
+cv2.imwrite('rotated90.jpg',rotated90)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
