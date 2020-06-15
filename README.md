@@ -22,7 +22,43 @@ The following is the order I suggest to look into the concepts.
 ### 1. Basics with Images - [Averaging Images](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Image%20Averaging)
 Image averaging is a DIP technique that is used to enhance the images which are corrupted with random noise. The arithmetic mean of the intensity values for each pixel position is computed for a set of images of the same viewfield. The basic formula behind it is.  
 ![Image Averaging over set of N images](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/images/averaging.png)  
-     
+
+### 2. Successive Rotations
+### 3. Interpolations
+### 4. Interpolation-Inverse Mapping
+### 5. Basic Transformations
+### 6. Perspective Transformation
+### 7. Est. Transformation
+### 8. Log and Linear Transformation
+### 9. Shading Correction
+### 10. Laplacian
+### 11. Laplacian+Gaussian
+### 12. Laplacian, Sobel, CannyEdge
+### 13. Sobel-X and Y
+### 14. Histogram Equalisation
+### 15. Normalize Histogram
+### 16. Image Temperature
+### 17. Box Filter
+### 18. GaussianFilter+Kernels
+### 19. Morphological Processing
+### 20. Morphological Text Processing
+### 21. Morphological Fingerprint Processing
+### 22. Morphological Outline
+### 23. Capture Video Frames
+### 24. Video background Subtraction
+### 25. VideoCapture_GoogleColab
+### 26. Contours-OpenCV
+### 27. Fitting Polygons
+### 28. Hough Lines
+### 29. Adaptive+Gaussian Thresholding
+### 30. OTSU Thresholding
+### 31. Grabcut
+### 32. Discrete Fourier Transformation
+### 33. OpenCV KMeans
+### 34. Object Movement Tracking
+### 35. Live Hand Gesture Recognition
+
+
 
 ### Resources
 I am mentioning some of the resources which I found very useful during my learning stage.
