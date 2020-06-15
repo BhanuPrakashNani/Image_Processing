@@ -51,7 +51,18 @@ Original | Nearest Neighbour - Inverse Mapping
 
 
 ### 5. Basic Transformations - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Basic%20Transformations)
+We have seen the basic transformations like rotation and scaling. Now lets see one more basic transformation known as translation.
+Original | Translation  
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Basic%20Transformations/calvinHobbes.jpeg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Basic%20Transformations/Translation.jpg)
+
 ### 6. Perspective Transformation
+The perspective transformation deals with the conversion of 3d world into 2d image for getting better insights about the required information. The 3D object co-ordinates are changed into the co-ordinates wrt world frame of reference and then according to camera coordiante frame reference then continued by changing into Image Plave 2D coordinates and then to the pixel co-ordinates. 
+
+Distorted Image         |  OpenCV - Perspective Transf Function         |  Manual Correction
+:-------------------------:|:-------------------------:|:------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Perspective%20Transformation/chDistorted.jpeg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Perspective%20Transformation/ch.jpeg) | ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Perspective%20Transformation/ch.jpg)  
+
 ### 7. Est. Transformation
 ### 8. Log and Linear Transformation
 ### 9. Shading Correction
