@@ -1,5 +1,5 @@
 # Image_Processing
-Welcome aboard. With the growing technologies out in the world, we have seen how important aspect Image Processing has become. This repository provides a complete understanding of practical implementation of all the concepts to be known for a developer to start their Image Processing journey. 
+Welcome aboard. With the growing technologies out in the world, we have seen how important Image Processing has become. This repository provides a complete understanding of practical implementation of all the concepts to be known for a developer to start their Image Processing journey. 
 
 ## Contents
 
@@ -38,6 +38,8 @@ Welcome aboard. With the growing technologies out in the world, we have seen how
 33. [OpenCV KMeans](https://github.com/BhanuPrakashNani/Image_Processing#33-opencv-kmeans---code)
 34. [Object Movement Tracking](https://github.com/BhanuPrakashNani/Image_Processing#34-object-movement-tracking---code)
 35. [Live Hand Gesture Recognition](https://github.com/BhanuPrakashNani/Image_Processing#35-live-hand-gesture-recognition---code)
+
+Before we jump into the concepts, let us ince have a look at the definition of Image Processing and its role.
 
 ## A Glance into Image Processing
 Image processing is often viewed as arbitrarily manipulating an image to achieve an aesthetic standard or to support a preferred reality. However, image processing is more accurately defined as a means of translation between the human visual system and digital imaging devices. The human visual system does not perceive the world in the same manner as digital detectors, with display devices imposing additional noise and bandwidth restrictions. Salient differences between the human and digital detectors will be shown, along with some basic processing steps for achieving translation. Image processing must be approached in a manner consistent with the scientific method so that others may reproduce, and validate, one's results. This includes recording and reporting processing actions, and applying similar treatments to adequate control images.[Src](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3635309/)
