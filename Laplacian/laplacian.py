@@ -46,5 +46,6 @@ for (kernelName, kernel) in kernelBank:
 	cv2.imshow("original", gray)
 	cv2.imshow("{} - convole".format(kernelName), convoleOutput)
 	cv2.imshow("{} - opencv".format(kernelName), opencvOutput)
+	cv2.imwrite("laplacian.jpg", convoleOutput)
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
