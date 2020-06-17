@@ -84,6 +84,12 @@ Original | Contrast Stretched
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Log%20and%20Contrast_Stretching/log.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Log%20and%20Contrast_Stretching/contrast_stretch.jpg)
 
 ### 9. Shading Correction
+Shading Correction is used for correcting the parts of an image which are having some faults due to multiple reasons like, camera light obstruction. So correcting the image for required purpose is essential. So in this example we have used a faulty image of a chessboard and corrected the image. Gaussian Blur is used to correct the shading in the corner of the image.
+
+Original | Corrected Image 
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Shading%20Correction/ChessBoardGrad.png)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Shading%20Correction/Converted.png)
+
 ### 10. Laplacian
 ### 11. Laplacian+Gaussian
 ### 12. Laplacian, Sobel, CannyEdge
