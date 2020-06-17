@@ -129,31 +129,31 @@ Original | Corrected Image
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Shading%20Correction/ChessBoardGrad.png)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Shading%20Correction/Converted.png)
 
 ### 10. Laplacian - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian)
-### 11. Laplacian+Gaussian
-### 12. Laplacian, Sobel, CannyEdge
-### 13. Sobel-X and Y
-### 14. Histogram Equalisation
-### 15. Normalize Histogram
-### 16. Image Temperature
-### 17. Box Filter
-### 18. GaussianFilter+Kernels
-### 19. Morphological Processing
-### 20. Morphological Text Processing
-### 21. Morphological Fingerprint Processing
-### 22. Morphological Outline
-### 23. Capture Video Frames
-### 24. Video background Subtraction
-### 25. VideoCapture_GoogleColab
-### 26. Contours-OpenCV
-### 27. Fitting Polygons
-### 28. Hough Lines
-### 29. Adaptive+Gaussian Thresholding
-### 30. OTSU Thresholding
-### 31. Grabcut
-### 32. Discrete Fourier Transformation
-### 33. OpenCV KMeans
-### 34. Object Movement Tracking
-### 35. Live Hand Gesture Recognition
+### 11. Laplacian+Gaussian - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian%2BGaussian)
+### 12. Laplacian, Sobel, CannyEdge - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian%2C%20Sobel%2C%20CannyEdge)
+### 13. Sobel-X and Y - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Sobel-X%20and%20Y)
+### 14. Histogram Equalisation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Histogram%20Equalisation)
+### 15. Normalize Histogram - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Normalize%20Histogram)
+### 16. Image Temperature - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Image%20Temperature)
+### 17. Box Filter - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Box%20Filter)
+### 18. GaussianFilter+Kernels - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/GaussianFilter%2BKernels)
+### 19. Morphological Processing -[Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Processing)
+### 20. Morphological Text Processing - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Text%20Processing)
+### 21. Morphological Fingerprint Processing - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Fingerprint%20Processing)
+### 22. Morphological Outline - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Outline)
+### 23. Capture Video Frames - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Capture%20Video%20Frames)
+### 24. Video background Subtraction - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Video%20background%20Subtraction)
+### 25. VideoCapture_GoogleColab - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/VideoCapture_GoogleColab)
+### 26. Contours-OpenCV - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Contours-OpenCV)
+### 27. Fitting Polygons - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Fitting%20Polygons)
+### 28. Hough Lines - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Hough%20Lines)
+### 29. Adaptive+Gaussian Thresholding - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Adaptive%2BGaussian%20Thresholding)
+### 30. OTSU Thresholding - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/OTSU%20Thresholding)
+### 31. Grabcut - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Grabcut)
+### 32. Discrete Fourier Transformation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Discrete%20Fourier%20Transformation)
+### 33. OpenCV KMeans - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/OpenCV%20KMeans)
+### 34. Object Movement Tracking - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Object%20Movement%20Tracking)
+### 35. Live Hand Gesture Recognition - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Live%20Hand%20Gesture%20Recognition)
 
 
 
