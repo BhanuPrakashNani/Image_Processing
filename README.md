@@ -132,8 +132,8 @@ Original | Corrected Image
 
 ### 10. Laplacian - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian)
 A Laplacian filter is an edge detector which computes the second derivatives of an image, measuring the rate at which the first derivatives change. That determines if a change in adjacent pixel values is from an edge or continuous progression.
-A laplacian filter or kernel looks like this:
- \[0,  1, 0]  
+A laplacian filter or kernel looks like this:  
+ 	\[0,  1, 0]  
 	\[1, -4, 1]  
 	\[0,  1, 0]  
  
@@ -144,6 +144,11 @@ A laplacian filter or kernel looks like this:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian/original.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian/laplacian.jpg)
  
 ### 11. Laplacian+Gaussian - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian%2BGaussian)
+As you can see from the above example, the Laplacian kernel is very sensitive to noise. Hence we use Gaussian Filter to first smoothen the image and remove the noise. And then the Laplacian Filter is applied for better results.
+
+Laplacian | Gaussian+Laplacian 
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2BGaussian/Laplacian.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2BGaussian/Gaussian%20%2B%20Laplacian.jpg)
 ### 12. Laplacian, Sobel, CannyEdge - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian%2C%20Sobel%2C%20CannyEdge)
 ### 13. Sobel-X and Y - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Sobel-X%20and%20Y)
 ### 14. Histogram Equalisation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Histogram%20Equalisation)
