@@ -14,4 +14,5 @@ img = cv2.imread('1.jpg', 0)
 piecewise(img,h,w)
 
 cv2.imshow("image",img)
+cv2.imwrite("image.jpg", img)
 cv2.waitKey(0)
