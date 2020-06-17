@@ -39,7 +39,7 @@ Welcome aboard. With the growing technologies out in the world, we have seen how
 34. [Object Movement Tracking](https://github.com/BhanuPrakashNani/Image_Processing#34-object-movement-tracking---code)
 35. [Live Hand Gesture Recognition](https://github.com/BhanuPrakashNani/Image_Processing#35-live-hand-gesture-recognition---code)
 
-Before we jump into the concepts, let us ince have a look at the definition of Image Processing and its role.
+Before we jump into the concepts, let us once have a look at the definition of Image Processing.
 
 ## A Glance into Image Processing
 Image processing is often viewed as arbitrarily manipulating an image to achieve an aesthetic standard or to support a preferred reality. However, image processing is more accurately defined as a means of translation between the human visual system and digital imaging devices. The human visual system does not perceive the world in the same manner as digital detectors, with display devices imposing additional noise and bandwidth restrictions. Salient differences between the human and digital detectors will be shown, along with some basic processing steps for achieving translation. Image processing must be approached in a manner consistent with the scientific method so that others may reproduce, and validate, one's results. This includes recording and reporting processing actions, and applying similar treatments to adequate control images.[Src](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3635309/)
@@ -131,6 +131,18 @@ Original | Corrected Image
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Shading%20Correction/ChessBoardGrad.png)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Shading%20Correction/Converted.png)
 
 ### 10. Laplacian - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian)
+A Laplacian filter is an edge detector which computes the second derivatives of an image, measuring the rate at which the first derivatives change. That determines if a change in adjacent pixel values is from an edge or continuous progression.
+A laplacian filter or kernel looks like this:
+ \[0,  1, 0]  
+	\[1, -4, 1]  
+	\[0,  1, 0]  
+ 
+ But a point to note is that Laplacian is very sensitive to noise. It even detects the edges for the noise in the image.
+ 
+ Original | Laplacian Filter 
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian/original.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian/laplacian.jpg)
+ 
 ### 11. Laplacian+Gaussian - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian%2BGaussian)
 ### 12. Laplacian, Sobel, CannyEdge - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian%2C%20Sobel%2C%20CannyEdge)
 ### 13. Sobel-X and Y - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Sobel-X%20and%20Y)
