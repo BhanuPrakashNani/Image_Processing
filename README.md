@@ -64,6 +64,11 @@ Distorted Image         |  OpenCV - Perspective Transf Function         |  Manua
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Perspective%20Transformation/chDistorted.jpeg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Perspective%20Transformation/ch.jpeg) | ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Perspective%20Transformation/ch.jpg)  
 
 ### 7. Est. Transformation
+This is just and example of using custom transformations for the required purpose. In the below example I have tried to extract the root part from the image.
+
+Original | Transformed  
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Est.%20Transformation/1.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Est.%20Transformation/image.jpg)
 ### 8. Log and Linear Transformation
 ### 9. Shading Correction
 ### 10. Laplacian
