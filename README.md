@@ -56,21 +56,21 @@ Original | Translation
 :--------------------------:|:--------------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Basic%20Transformations/calvinHobbes.jpeg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Basic%20Transformations/Translation.jpg)
 
-### 6. Perspective Transformation
+### 6. Perspective Transformation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Perspective%20Transformation)
 The perspective transformation deals with the conversion of 3d world into 2d image for getting better insights about the required information. The 3D object co-ordinates are changed into the co-ordinates wrt world frame of reference and then according to camera coordiante frame reference then continued by changing into Image Plave 2D coordinates and then to the pixel co-ordinates. 
 
 Distorted Image         |  OpenCV - Perspective Transf Function         |  Manual Correction
 :-------------------------:|:-------------------------:|:------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Perspective%20Transformation/chDistorted.jpeg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Perspective%20Transformation/ch.jpeg) | ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Perspective%20Transformation/ch.jpg)  
 
-### 7. Est. Transformation
+### 7. Est. Transformation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Est.%20Transformation)
 This is just and example of using custom transformations for the required purpose. In the below example I have tried to extract the root part from the image.
 
 Original | Transformed  
 :--------------------------:|:--------------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Est.%20Transformation/1.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Est.%20Transformation/image.jpg)  
 
-### 8. Log and Linear Transformation
+### 8. Log and Contrast Stretching - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Log%20and%20Contrast_Stretching)
 One of the grey-level transformations is Logarithmic Transformation. It is defined as ```s = c*log(r+1)``` , where 's' and 'r' are the pixel values of the output and the input image respectively and 'c' is a constant. 
 
 Original | Log-Transformed  
@@ -83,14 +83,14 @@ Original | Contrast Stretched
 :--------------------------:|:--------------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Log%20and%20Contrast_Stretching/log.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Log%20and%20Contrast_Stretching/contrast_stretch.jpg)
 
-### 9. Shading Correction
+### 9. Shading Correction - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Shading%20Correction)
 Shading Correction is used for correcting the parts of an image which are having some faults due to multiple reasons like, camera light obstruction. So correcting the image for required purpose is essential. So in this example we have used a faulty image of a chessboard and corrected the image. Gaussian Blur is used to correct the shading in the corner of the image.
 
 Original | Corrected Image 
 :--------------------------:|:--------------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Shading%20Correction/ChessBoardGrad.png)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Shading%20Correction/Converted.png)
 
-### 10. Laplacian
+### 10. Laplacian - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian)
 ### 11. Laplacian+Gaussian
 ### 12. Laplacian, Sobel, CannyEdge
 ### 13. Sobel-X and Y
