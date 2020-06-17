@@ -1,5 +1,43 @@
 # Image_Processing
-Welcome aboard. With the growing technologies out in the world, we have seen how important aspect Image Processing has become. This repository provides a complete understanding of practical implementation of all the concepts to be known for a developer to start their Image Processing journey.  
+Welcome aboard. With the growing technologies out in the world, we have seen how important aspect Image Processing has become. This repository provides a complete understanding of practical implementation of all the concepts to be known for a developer to start their Image Processing journey. 
+
+## Contents
+
+1. [Basics with Images](https://github.com/BhanuPrakashNani/Image_Processing#1-basics-with-images---averaging-images)
+2. [Successive Rotations](https://github.com/BhanuPrakashNani/Image_Processing#2-successive-rotations---code)
+3. [Interpolations](https://github.com/BhanuPrakashNani/Image_Processing#3-interpolations---code)
+4. [Interpolations-Inverse Mapping](https://github.com/BhanuPrakashNani/Image_Processing#4-interpolation-inverse-mapping---code)
+5. [Basic Transformations](https://github.com/BhanuPrakashNani/Image_Processing#5-basic-transformations---code)
+6. [Perspective Transofrmation](https://github.com/BhanuPrakashNani/Image_Processing#6-perspective-transformation)
+7. [Estimating the Transformation](https://github.com/BhanuPrakashNani/Image_Processing#7-est-transformation)
+8. [Log and Contrast Stretching](https://github.com/BhanuPrakashNani/Image_Processing#8-log-and-linear-transformation)
+9. [Shading Correction](https://github.com/BhanuPrakashNani/Image_Processing#9-shading-correction)
+10. [Laplacian](https://github.com/BhanuPrakashNani/Image_Processing#10-laplacian---code)
+11. [Laplacian+Gaussian]()
+12. [Laplacian, Sobel, CannyEdge]()
+13. [Sobel-X and Y]()
+14. [Histogram Equalisation]()
+15. [Normalize Histogram]()
+16. [Image Temperature]()
+17. [Box Filter]()
+18. [GaussianFilter+Kernels]()
+19. [Morphological Processing]()
+20. [Morphological Text Processing]()
+21. [Morphological Fingerprint Processing]()
+22. [Morphological Outline]()
+23. [Capture Video Frames]()
+24. [Video background Subtraction]()
+25. [VideoCapture_GoogleColab]()
+26. [Contours-OpenCV]()
+27. [Fitting Polygons]()
+28. [Hough Lines]()
+29. [Adaptive+Gaussian Thresholding]()
+30. [OTSU Thresholding]()
+31. [Grabcut]()
+32. [Discrete Fourier Transformation]()
+33. [OpenCV KMeans]()
+34. [Object Movement Tracking]()
+35. [Live Hand Gesture Recognition]()
 
 ## A Glance into Image Processing
 Image processing is often viewed as arbitrarily manipulating an image to achieve an aesthetic standard or to support a preferred reality. However, image processing is more accurately defined as a means of translation between the human visual system and digital imaging devices. The human visual system does not perceive the world in the same manner as digital detectors, with display devices imposing additional noise and bandwidth restrictions. Salient differences between the human and digital detectors will be shown, along with some basic processing steps for achieving translation. Image processing must be approached in a manner consistent with the scientific method so that others may reproduce, and validate, one's results. This includes recording and reporting processing actions, and applying similar treatments to adequate control images.[Src](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3635309/)
