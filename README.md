@@ -72,6 +72,17 @@ Original | Transformed
 
 ### 8. Log and Linear Transformation
 One of the grey-level transformations is Logarithmic Transformation. It is defined as ```s = c*log(r+1)``` , where 's' and 'r' are the pixel values of the output and the input image respectively and 'c' is a constant. 
+
+Original | Log-Transformed  
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Log%20and%20Contrast_Stretching/log.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Log%20and%20Contrast_Stretching/log_transformed.jpg)  
+
+Contrast Stretching is a simple image enhancement technique that attempts to improve the contrast in an image by stretching the range of intensity values it contains to span a desired range of values.
+
+Original | Contrast Stretched 
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Log%20and%20Contrast_Stretching/log.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Log%20and%20Contrast_Stretching/contrast_stretch.jpg)
+
 ### 9. Shading Correction
 ### 10. Laplacian
 ### 11. Laplacian+Gaussian
