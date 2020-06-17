@@ -68,8 +68,10 @@ This is just and example of using custom transformations for the required purpos
 
 Original | Transformed  
 :--------------------------:|:--------------------------:
-![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Est.%20Transformation/1.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Est.%20Transformation/image.jpg)
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Est.%20Transformation/1.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Est.%20Transformation/image.jpg)  
+
 ### 8. Log and Linear Transformation
+One of the grey-level transformations is Logarithmic Transformation. It is defined as ```s = c*log(r+1)``` , where 's' and 'r' are the pixel values of the output and the input image respectively and 'c' is a constant. 
 ### 9. Shading Correction
 ### 10. Laplacian
 ### 11. Laplacian+Gaussian
