@@ -38,6 +38,7 @@ kernelBank = (
 
 image = cv2.imread(args["image"])
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cv2.imwrite("originallenna.jpg", gray)
 
 for (kernelName, kernel) in kernelBank:
 	print("[INFO] applying {} kernel".format(kernelName))
