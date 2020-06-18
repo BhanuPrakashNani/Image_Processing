@@ -150,7 +150,7 @@ Laplacian | Gaussian+Laplacian
 :--------------------------:|:--------------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2BGaussian/Laplacian.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2BGaussian/Gaussian%20%2B%20Laplacian.jpg)
 ### 12. Laplacian, Sobel, CannyEdge - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian%2C%20Sobel%2C%20CannyEdge)
-The Sobel filter is used for edge detection. It works by calculating the gradient of image intensity at each pixel within the image. There are two sobel filters- SobelX and SobelY  
+The **Sobel filter** is used for edge detection. It works by calculating the gradient of image intensity at each pixel within the image. There are two sobel filters- SobelX and SobelY  
   SobelX   |    SobelY  
 [-1, 0, 1]   [-1, -2, -1]  
 [-2, 0, 2]   [ 0,  0,  0]  
@@ -160,14 +160,28 @@ Original         |  SobelX         |  SobelY
 :-------------------------:|:-------------------------:|:------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/originallenna.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/SobelXLenna.jpg) | ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/SobelYLenna.jpg) 
 
+But the important thing to note here is, we have to pad the image before applying these filters to preserve the features of the image at the edges. I have used zero padding here to pad the image on the four sides.
+
+**Canny Edge Detection** is a multi-stage algorithm  consisting of the following:
+  1. **Noise Reduction** - Since edge detection is susceptible to noise in the image, first step is to remove the noise in the image with a 5x5 Gaussian filter.  
+  2. **Intensity Gradient** - Smoothened image is then filtered with a Sobel kernel in both horizontal and vertical direction to get first derivative in horizontal direction (Gx) and vertical direction (Gy). 
+  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/images/gradient.png)
+  3. **Non Maximum Supression** - After getting gradient magnitude and direction, a full scan of image is done to remove any unwanted pixels which may not constitute the edge. For this, at every pixel, pixel is checked if it is a local maximum in its neighborhood in the direction of gradient.
+  4. **Hysteresis Thresholding** - This stage decides which are all edges are really edges and which are not. For this, we need two threshold values, minVal and maxVal. Any edges with intensity gradient more than maxVal are sure to be edges and those below minVal are sure to be non-edges, so discarded. Those who lie between these two thresholds are classified edges or non-edges based on their connectivity. If they are connected to "sure-edge" pixels, they are considered to be part of edges. Otherwise, they are also discarded.
+  This is an excerpt from [OpenCV Canny Edge Detection](https://docs.opencv.org/trunk/da/d22/tutorial_py_canny.html).
+
+Original | Canny Edge 
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/originallenna.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/CannyLenna.jpg) 
+
+### 13. Sobel-X and Y - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Sobel-X%20and%20Y)
 As we have seen Laplacian previously, lets compare it with the Sobel Filters. 
 Laplacian        |  SobelX         |  SobelY
 :-------------------------:|:-------------------------:|:------------------:
-![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/LaplacianLenna.png)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/SobelXLenna.jpg) | ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/SobelYLenna.jpg) 
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Sobel-X%20and%20Y/laplacianLenna.py)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Sobel-X%20and%20Y/SobelXLenna.jpg) |   ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Sobel-X%20and%20Y/SobelYLenna.jpg)  
 
 Because the second-order derivatives in Laplacian, this gradient operator is more sensitive to noise than first-order gradient operators. Also the thresholded magnitude of Laplacian operator produces double edges. For these reasons, together with its inability to detect the edge direction, the Laplacian as such is not a good edge detection operator. A better utilization of it is to use its zero-crossing to detect the edge locations.
 
-### 13. Sobel-X and Y - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Sobel-X%20and%20Y)
 ### 14. Histogram Equalisation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Histogram%20Equalisation)
 ### 15. Normalize Histogram - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Normalize%20Histogram)
 ### 16. Image Temperature - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Image%20Temperature)
