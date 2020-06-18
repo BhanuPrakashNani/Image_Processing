@@ -178,7 +178,7 @@ Original | Canny Edge
 As we have seen Laplacian previously, lets compare it with the Sobel Filters. 
 Laplacian        |  SobelX         |  SobelY
 :-------------------------:|:-------------------------:|:------------------:
-![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Sobel-X%20and%20Y/laplacianLenna.py)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Sobel-X%20and%20Y/SobelXLenna.jpg) |   ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Sobel-X%20and%20Y/SobelYLenna.jpg)  
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Sobel-X%20and%20Y/LaplacianLenna.png)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Sobel-X%20and%20Y/SobelXLenna.jpg) |   ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Sobel-X%20and%20Y/SobelYLenna.jpg)  
 
 Because the second-order derivatives in Laplacian, this gradient operator is more sensitive to noise than first-order gradient operators. Also the thresholded magnitude of Laplacian operator produces double edges. For these reasons, together with its inability to detect the edge direction, the Laplacian as such is not a good edge detection operator. A better utilization of it is to use its zero-crossing to detect the edge locations.
 
