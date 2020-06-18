@@ -150,6 +150,23 @@ Laplacian | Gaussian+Laplacian
 :--------------------------:|:--------------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2BGaussian/Laplacian.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2BGaussian/Gaussian%20%2B%20Laplacian.jpg)
 ### 12. Laplacian, Sobel, CannyEdge - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian%2C%20Sobel%2C%20CannyEdge)
+The Sobel filter is used for edge detection. It works by calculating the gradient of image intensity at each pixel within the image. There are two sobel filters- SobelX and SobelY  
+  SobelX   |    SobelY  
+[-1, 0, 1]   [-1, -2, -1]  
+[-2, 0, 2]   [ 0,  0,  0]  
+[-1, 0, 1]   [ 1,  2,  1]  
+	
+Original         |  SobelX         |  SobelY
+:-------------------------:|:-------------------------:|:------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/originallenna.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/SobelXLenna.jpg) | ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/SobelYLenna.jpg) 
+
+As we have seen Laplacian previously, lets compare it with the Sobel Filters. 
+Laplacian        |  SobelX         |  SobelY
+:-------------------------:|:-------------------------:|:------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/LaplacianLenna.png)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/SobelXLenna.jpg) | ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2C%20Sobel%2C%20CannyEdge/SobelYLenna.jpg) 
+
+Because the second-order derivatives in Laplacian, this gradient operator is more sensitive to noise than first-order gradient operators. Also the thresholded magnitude of Laplacian operator produces double edges. For these reasons, together with its inability to detect the edge direction, the Laplacian as such is not a good edge detection operator. A better utilization of it is to use its zero-crossing to detect the edge locations.
+
 ### 13. Sobel-X and Y - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Sobel-X%20and%20Y)
 ### 14. Histogram Equalisation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Histogram%20Equalisation)
 ### 15. Normalize Histogram - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Normalize%20Histogram)
