@@ -183,6 +183,24 @@ Laplacian        |  SobelX         |  SobelY
 Because the second-order derivatives in Laplacian, this gradient operator is more sensitive to noise than first-order gradient operators. Also the thresholded magnitude of Laplacian operator produces double edges. For these reasons, together with its inability to detect the edge direction, the Laplacian as such is not a good edge detection operator. A better utilization of it is to use its zero-crossing to detect the edge locations.
 
 ### 14. Histogram Equalisation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Histogram%20Equalisation)
+A histogram of an image is nothing but the graphical representation of the intensity distribution of an image, quantifying the number of pixels for each intensity value. **Histogram Equalization** a method that improves the contrast in an image, in order to stretch out the intensity range.
+
+As per [OpenCV Documentation](https://docs.opencv.org/3.4/d4/d1b/tutorial_histogram_equalization.html):
+  * Equalization implies mapping one distribution (the given histogram) to another distribution (a wider and more uniform distribution of intensity values) so the intensity values are spread over the whole range.
+
+  * To accomplish the equalization effect, the remapping should be the cumulative distribution function (cdf) (more details, refer to Learning OpenCV). For the histogram H(i), its cumulative distribution H′(i) is:
+  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/images/f.png)
+  
+ So, here I take an example image, plot its histogram and then equalize it.
+ 
+ Original Hist | Equalized Hist 
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Histogram%20Equalisation/hist.png)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Histogram%20Equalisation/equal-hist.png)
+
+How the image looks after equalising the histogram.  
+
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Histogram%20Equalisation/Equalized%20Image.png)
+
 ### 15. Normalize Histogram - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Normalize%20Histogram)
 ### 16. Image Temperature - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Image%20Temperature)
 ### 17. Box Filter - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Box%20Filter)
