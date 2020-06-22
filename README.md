@@ -146,7 +146,7 @@ A laplacian filter or kernel looks like this:
 ### 11. Laplacian+Gaussian - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian%2BGaussian)
 As you can see from the above example, the Laplacian kernel is very sensitive to noise. Hence we use Gaussian Filter to first smoothen the image and remove the noise. And then the Laplacian Filter is applied for better results.
 
-Laplacian | Gaussian+Laplacian 
+Laplacian | Gaussian and Laplacian 
 :--------------------------:|:--------------------------:
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2BGaussian/Laplacian.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Laplacian%2BGaussian/Gaussian%20%2B%20Laplacian.jpg)
 ### 12. Laplacian, Sobel, CannyEdge - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Laplacian%2C%20Sobel%2C%20CannyEdge)
@@ -202,25 +202,45 @@ How the image looks after equalising the histogram.
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Histogram%20Equalisation/Equalized%20Image.png)
 
 ### 15. Normalize Histogram - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Normalize%20Histogram)
+
 ### 16. Image Temperature - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Image%20Temperature)
+
 ### 17. Box Filter - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Box%20Filter)
+
 ### 18. GaussianFilter+Kernels - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/GaussianFilter%2BKernels)
+
 ### 19. Morphological Processing -[Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Processing)
+
 ### 20. Morphological Text Processing - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Text%20Processing)
+
 ### 21. Morphological Fingerprint Processing - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Fingerprint%20Processing)
+
 ### 22. Morphological Outline - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Outline)
+
 ### 23. Capture Video Frames - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Capture%20Video%20Frames)
+
 ### 24. Video background Subtraction - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Video%20background%20Subtraction)
+
 ### 25. VideoCapture_GoogleColab - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/VideoCapture_GoogleColab)
+
 ### 26. Contours-OpenCV - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Contours-OpenCV)
+
 ### 27. Fitting Polygons - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Fitting%20Polygons)
+
 ### 28. Hough Lines - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Hough%20Lines)
+
 ### 29. Adaptive+Gaussian Thresholding - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Adaptive%2BGaussian%20Thresholding)
+
 ### 30. OTSU Thresholding - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/OTSU%20Thresholding)
+
 ### 31. Grabcut - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Grabcut)
+
 ### 32. Discrete Fourier Transformation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Discrete%20Fourier%20Transformation)
+
 ### 33. OpenCV KMeans - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/OpenCV%20KMeans)
+
 ### 34. Object Movement Tracking - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Object%20Movement%20Tracking)
+
 ### 35. Live Hand Gesture Recognition - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Live%20Hand%20Gesture%20Recognition)
 
 
