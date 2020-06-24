@@ -202,8 +202,18 @@ How the image looks after equalising the histogram.
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Histogram%20Equalisation/Equalized%20Image.png)
 
 ### 15. Normalize Histogram - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Normalize%20Histogram)
+Image Normalization is a process in which we change the range of pixel intensity values to make the image more familiar or normal to the senses. Often image normalization is used for increasing contrast and removing noise. In a normalized image Mean = 0 and Variance = 1. In the following example, there is a very slight change, which may or may not be visible to us at times. But the main concept behind normalization is to bring the intensity values to a normal level which can be used for further processing.
+
+ Equalized Hist | Normalized Hist 
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Normalize%20Histogram/equilised.jpg)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Normalize%20Histogram/norm.png)
 
 ### 16. Image Temperature - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Image%20Temperature)
+To increate the temperature of an image, I have used Look-up Table(LUT) and Univariate Spline. An LUT transformation assigns a new pixel value to each pixel in the input image according to the values given by a table. In this table, the index represents the input intensity value and the content of the cell given by the index represents the corresponding output value. A Univariate Spline is a one-dimensional smoothing spline that fits a given set of data points.
+
+ Original | Temperature Increase 
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Image%20Temperature/hist.png)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Image%20Temperature/warmed.jpg)
 
 ### 17. Box Filter - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Box%20Filter)
 
