@@ -1,3 +1,5 @@
+#Code Resource - http://www.askaswiss.com/2016/02/how-to-manipulate-color-temperature-opencv-python.html
+
 import cv2
 import numpy as np
 import collections
