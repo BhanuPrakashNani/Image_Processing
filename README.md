@@ -216,16 +216,50 @@ To increate the temperature of an image, I have used Look-up Table(LUT) and Univ
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Image%20Temperature/hist.png)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Image%20Temperature/warmed.jpg)
 
 ### 17. Box Filter - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Box%20Filter)
+By convolving the image with a normalized box filter, it takes the average of all the pixels under kernel area and replaces the central element with this average. Either of cv2.blur() or cv2.boxFilter() can be used for the same.
+
+ Original | Box Filter
+:--------------------------:|:--------------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Box%20Filter/orig.png)  |  ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Box%20Filter/boxfil.png)
 
 ### 18. GaussianFilter+Kernels - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/GaussianFilter%2BKernels)
+Instead of a box filter consisting of equal filter coefficients, a Gaussian kernel is used before applying the other edge-detection kernels for better results. Gaussian Filter is very effective in removing the Gaussian noise and improves the accuracy of the other kernels like Laplacian and Sobel. To show the exact working of Laplacian and Sobel, I had used Gaussian Filter in the previous implementations. Because those kernels are not effective without Gaussian Blurring, I haven't shown that.
 
 ### 19. Morphological Processing -[Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Processing)
+Morphological transformations are some simple operations based on the image shape. And they are performed on binary images with the help of kernels which decide the nature of the operation. Some of the mostly used operation are:  
+  * Erosion - It erodes away the boundaries of foreground object. All the pixels near boundary will be discarded depending upon the size of kernel  
+  * Dilation - It is just opposite of erosion. It increases the white region in the image or size of foreground object increases.  
+  * Opening - Erosion followed by dilation is called opening.  
+  * Closing - Dilation followed by Erosion is called closing.  
+  * Morphological Gradient - Difference between Dialtion and erosion of an image.
+  
+  Erosion        |  Dilation         
+:-------------------:|:-------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Processing/Erosion.png)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Processing/Dilation.png)
+
+  Opening        |  Closing         
+:-------------------:|:-------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Processing/Opening.png)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Processing/Closing.png)
+ 
 
 ### 20. Morphological Text Processing - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Text%20Processing)
+I have used multiple combinations of the above mentioned morphological operations to enhance an image of text. I am mentioning some of the processed images here. For more images, please got to the [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Text%20Processing) here.
+
+Original        |  Processed 1         |  Processed 2
+:-------------------------:|:-------------------------:|:------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Text%20Processing/improved.jpg)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Text%20Processing/Processed%201.png) |   ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Text%20Processing/Processed%202.png)  
 
 ### 21. Morphological Fingerprint Processing - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Fingerprint%20Processing)
+In this example too, I have tried out different combinations possible with various kernel sizes to give a better insights of the morphological operations and their effects on an image.
+
+  Original        |  Improved         
+:-------------------:|:-------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Fingerprint%20Processing/Input.png)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Fingerprint%20Processing/Improved.png)
 
 ### 22. Morphological Outline - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Morphological%20Outline)
+It is the difference between dilation and erosion of an image.  
+
+<img src="https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Outline/Outline.png" alt="drawing" width="300"/>
 
 ### 23. Capture Video Frames - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Capture%20Video%20Frames)
 
