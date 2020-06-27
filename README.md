@@ -262,10 +262,15 @@ It is the difference between dilation and erosion of an image.
 <img src="https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Morphological%20Outline/Outline.png" alt="drawing" width="300"/>
 
 ### 23. Capture Video Frames - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Capture%20Video%20Frames)
+OpenCV function for capturing video frames is ``` vid = cv2.VideoCapture ```. Using ``` vid.read()``` we can fetch each fram from the video.
 
 ### 24. Video background Subtraction - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Video%20background%20Subtraction)
+For subtracting a static background from the vido0 frames I have used multiple methods. The first one is to iteratively subtract the background image from each frame and then display on the screen. The other method consists of using ``` cv2.createBackgroundSubtractorMOG2()``` in OpenCV and creating a mask with that background subtractor. After background subtraction, I have used various thresholdings for enhancing the objects entering into the video frames(since everytime the background gets subtracted, the new objects get highlighted). I have used Adaptive thresholding, Inverse Binary thresholding and drew contours on them for extra effects. The same can be seen in the GIF below.
+
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Video%20background%20Subtraction/ezgif.com-video-to-gif.gif)
 
 ### 25. VideoCapture_GoogleColab - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/VideoCapture_GoogleColab)
+This is a script for enthusiasts working in various project in Google Colab which uses the web cam. Since Google Colab has no access t our hardware, we need to use this script for enabling web cam. This is not my code and has been taken from [here](https://colab.research.google.com/notebooks/snippets/advanced_outputs.ipynb#scrollTo=buJCl90WhNfq) for better reach.
 
 ### 26. Contours-OpenCV - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Contours-OpenCV)
 
