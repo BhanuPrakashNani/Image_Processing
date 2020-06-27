@@ -52,6 +52,16 @@ while(1):
     cv2.imshow('Contours on Binary Threshold Frames', image)
     cv2.imshow('Contours Binary Rem Bg Frame', image2)
     cv2.imshow('Contours on Adaptive Threshold Frames', image3)
+
+    cv2.imwrite('Original.jpg', img)
+    cv2.imwrite('Background  Subtractor.jpg', fgmask2)
+    cv2.imwrite('Adaptive Thresholding + Subtract Background Frame.jpg', thresh1)
+    cv2.imwrite('Binary Thresholding on Frames.jpg', thresh2)
+    cv2.imwrite('Binary Thresholding on Frames + Subtract Background Frame.jpg', thresh3)
+
+    cv2.imwrite('Contours on Binary Threshold Frames.jpg', image)
+    cv2.imwrite('Contours Binary Rem Bg Frame.jpg', image2)
+    cv2.imwrite('Contours on Adaptive Threshold Frames.jpg', image3)
         
     k = cv2.waitKey(30) & 0xff;
     if k == 27: 
