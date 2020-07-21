@@ -54,11 +54,11 @@ There are two types of methods used for image processing namely, analogue and di
 
 **Important point** to note while going through any concept is that the image is considered on a grey scale since color increases the complexity of the model. One may want to introduce an image processing tool using gray level images because of the format of gray level images because the inherent complexity of gray level images is lower than that of color images. In most cases. after presenting a gray-level image method, it can be be extended to color images.
 
-Forgetting deeper insights into any of the concepts, I suggest you to go through [Digital Image Processing, Rafael C. Gonzalez • Richard E. Woods, 4th Edition](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Digital_Image_Processing%2C_4th%20Edition-Rafael%20Gonzalez.pdf) 
+For getting deeper insights into any of the concepts, I suggest you to go through [Digital Image Processing, Rafael C. Gonzalez • Richard E. Woods, 4th Edition](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Digital_Image_Processing%2C_4th%20Edition-Rafael%20Gonzalez.pdf) 
 
 From here on I will be referring Digital Image Processing as DIP. 
 
-**Disclaimer:** I am not the original author of the images used. They have been taken from various Image Processing sites. I have mentioned all of the referenced sites. Pardon if I missed any.
+**Disclaimer:** I am not the original author of the images used. They have been taken from various Image Processing sites. I have mentioned all of the referenced sites in resources. Pardon if I missed any.
 
 The following is the order I suggest to look into the concepts.
 ### 1. Basics with Images - [Averaging Images](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Image%20Averaging)
@@ -275,8 +275,22 @@ For subtracting a static background from the vido0 frames I have used multiple m
 This is a script for enthusiasts working in various project in Google Colab which uses the web cam. Since Google Colab has no access t our hardware, we need to use this script for enabling web cam. This is not my code and has been taken from [here](https://colab.research.google.com/notebooks/snippets/advanced_outputs.ipynb#scrollTo=buJCl90WhNfq) for better reach.
 
 ### 26. Contours-OpenCV - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Contours-OpenCV)
+Contours are nothing but simple curves which join all the continuous points along the boundary of an object which have similar characteristics like color or intensity. It is very helpful for object shape analysis, object recognition and etc. For better accuracy we use binary images. So before finding contours we should apply threshold or canny edge detection.
+
+The `cv2.findContours` function has three arguments, first one is source image, second is contour retrieval mode, third is contour approximation method. And it outputs a modified image, the contours and hierarchy. I have used this function nad traced out the contours on the following images. We can also find the largest contour of all contours in an image by doing max of it.
+
+Original        |  Color-Contours         |  Contours-GreyScale
+:-------------------------:|:-------------------------:|:------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Contours-OpenCV/bubblingFish.jpg)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Contours-OpenCV/Contours.jpg) |   ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Contours-OpenCV/CannyFish.jpg)  
 
 ### 27. Fitting Polygons - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Fitting%20Polygons)
+The approach we would be used to detect the shape of a given polygon will be based on classifying the detected shape on the basis of a number of sides it has. For example, if the detected polynomial has 3 sides, then it could be considered as a triangle, if the polynomial has 4 sides then it could be classified as a square or a rectangle. 
+
+I have used the `cv2.approxPolyDP` function. I have counted the contours with 3 sides, hence counting the number of triangles present in the image.
+
+  Original        |  Polygons Fitted         
+:-------------------:|:-------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Fitting%20Polygons/polygons.jpg)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Fitting%20Polygons/Contours.jpg)
 
 ### 28. Hough Lines - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Hough%20Lines)
 
@@ -301,6 +315,7 @@ I am mentioning some of the resources which I found very useful during my learni
   1. [OpenCV Documentation](https://docs.opencv.org/master/)
   2. [PyImageSearch Image Processing Archives](https://www.pyimagesearch.com/category/image-processing/)
   3. [OpenCV Python Tutorials](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_table_of_contents_imgproc/py_table_of_contents_imgproc.html#py-table-of-content-imgproc)
+  4. [Rich Radke Youtube Series](https://www.youtube.com/watch?v=UhDlL-tLT2U&list=PLuh62Q4Sv7BUf60vkjePfcOQc8sHxmnDX)
 
 ### Contributors
 I thank the contributors for helping with implementing few of the concepts.
