@@ -305,8 +305,19 @@ I have the used the first one here. The explanation of the hough line derivation
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Hough%20Lines/sudoku.jpg)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Hough%20Lines/hough.jpg)
 
 ### 29. Adaptive+Gaussian Thresholding - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Adaptive%2BGaussian%20Thresholding)
+In simple thresholding, the threshold value is global, hence is same for all the pixels in the image. Adaptive thresholding on the other hand is the method where the threshold value is calculated for smaller regions and therefore, there will be different threshold values for different regions of the image. In OpenCV, you can perform Adaptive threshold operation on an image using the method `cv2.adaptiveThreshold()` of the Imgproc class.
+
+Original        |  Global Thresholding         |  Adaptive Thresholding
+:-------------------------:|:-------------------------:|:------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Adaptive%2BGaussian%20Thresholding/page.jpg)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Adaptive%2BGaussian%20Thresholding/AM.jpg) |   ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Adaptive%2BGaussian%20Thresholding/AG.jpg)
+
 
 ### 30. OTSU Thresholding - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/OTSU%20Thresholding)
+Otsu's method is a global thresholding technique. It uses the histogram of the image for threshold searching process. It maximizes "between class variance" of the segmented classes. Otsu proves that Minimizing "within class variance" is same as maximizing "between class variance" of the segmented classes. And maximizing "between class variance" is computationally less expensive than minimizing "within class variance".
+
+  Original        |  Otsu Thresholding        
+:-------------------:|:-------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OTSU%20Thresholding/otsu-orig.png)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OTSU%20Thresholding/otsu-transform.png)
 
 ### 31. Grabcut - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Grabcut)
 
