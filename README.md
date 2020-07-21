@@ -293,6 +293,16 @@ I have used the `cv2.approxPolyDP` function. I have counted the contours with 3 
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Fitting%20Polygons/polygons.jpg)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Fitting%20Polygons/Contours.jpg)
 
 ### 28. Hough Lines - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Hough%20Lines)
+Hough Line Transform is used to detect straight lines in an image. Before applying the transform it is prescribed to perform an edge detection pre-processing. For detailed explanation go [here](https://docs.opencv.org/3.4/d9/db0/tutorial_hough_lines.html).
+
+OpenCV implements two kind of Hough Line Transforms:
+  1. Standard Hough Transform - `cv2.HoughLines()`
+  2. Probabilistic Hough Transform - `cv2.HoughLinesP()`
+I have the used the first one here. The explanation of the hough line derivation is out of the scope of this repo and I recommend to look over the above mentioned site for further in-depth details.
+
+  Original        |  Hough Transformed        
+:-------------------:|:-------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Hough%20Lines/sudoku.jpg)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Hough%20Lines/hough.jpg)
 
 ### 29. Adaptive+Gaussian Thresholding - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Adaptive%2BGaussian%20Thresholding)
 
