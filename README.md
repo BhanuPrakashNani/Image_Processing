@@ -320,6 +320,7 @@ Otsu's method is a global thresholding technique. It uses the histogram of the i
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OTSU%20Thresholding/otsu-orig.png)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OTSU%20Thresholding/otsu-transform.png)
 
 ### 31. Grabcut - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Grabcut)
+Grabcut is a foreground extraction algorithm with minimal user interaction. It requires the user to draw a rectangle around the foreground region. Then the algorithm segments it iteratively. Giving strokes on the image will make the algorithm understand that the marked area should be considered as foreground.
 
 ### 32. Discrete Fourier Transformation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Discrete%20Fourier%20Transformation)
 
@@ -336,7 +337,7 @@ I am mentioning some of the resources which I found very useful during my learni
   1. [OpenCV Documentation](https://docs.opencv.org/master/)
   2. [PyImageSearch Image Processing Archives](https://www.pyimagesearch.com/category/image-processing/)
   3. [OpenCV Python Tutorials](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_table_of_contents_imgproc/py_table_of_contents_imgproc.html#py-table-of-content-imgproc)
-  4. [Rich Radke Youtube Series](https://www.youtube.com/watch?v=UhDlL-tLT2U&list=PLuh62Q4Sv7BUf60vkjePfcOQc8sHxmnDX)
+  4. [Rich Radke Channel - Youtube](https://www.youtube.com/watch?v=UhDlL-tLT2U&list=PLuh62Q4Sv7BUf60vkjePfcOQc8sHxmnDX)
 
 ### Contributors
 I thank the contributors for helping with implementing few of the concepts.
