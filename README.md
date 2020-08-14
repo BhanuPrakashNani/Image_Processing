@@ -322,6 +322,13 @@ Otsu's method is a global thresholding technique. It uses the histogram of the i
 ### 31. Grabcut - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Grabcut)
 Grabcut is a foreground extraction algorithm with minimal user interaction. It requires the user to draw a rectangle around the foreground region. Then the algorithm segments it iteratively. Giving strokes on the image will make the algorithm understand that the marked area should be considered as foreground.
 
+[](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Grabcut/Screenshot%20from%202020-08-14%2023-16-57.png)
+[Src](https://docs.opencv.org/3.4/d8/d83/tutorial_py_grabcut.html)
+
+  Original        | Grabcut        
+:-------------------:|:-------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Grabcut/messi.jpg)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Grabcut/cut_messi.jpg)
+
 ### 32. Discrete Fourier Transformation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Discrete%20Fourier%20Transformation)
 
 ### 33. OpenCV KMeans - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/OpenCV%20KMeans)
