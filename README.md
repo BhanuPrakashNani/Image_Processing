@@ -330,12 +330,20 @@ Grabcut is a foreground extraction algorithm with minimal user interaction. It r
 ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Grabcut/messi.jpg)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Grabcut/cut_messi.jpg)
 
 ### 32. Discrete Fourier Transformation - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Discrete%20Fourier%20Transformation)
+Discrete Fourier transformation will transform an image from its spatial domain to its frequency domain. It is based on the idea that any function can be approximated with the sum of infinite sines and cosines. 
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Discrete%20Fourier%20Transformation/DFT.png)
+f is the image value in its spatial domain and F in its frequency domain. The result of the transformation is complex numbers.
+
+  Original        | DFT        
+:-------------------:|:-------------------:
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Discrete%20Fourier%20Transformation/Untitled.png)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/Discrete%20Fourier%20Transformation/idft.jpg)
 
 ### 33. OpenCV KMeans - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/OpenCV%20KMeans)
 
 ### 34. Object Movement Tracking - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Object%20Movement%20Tracking)
 
 ### 35. Live Hand Gesture Recognition - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Live%20Hand%20Gesture%20Recognition)
+This is a Digital Image Processing project in collaboration with [Abhishek BVS](https://github.com/abhishekbvs/) and [Praneeth Vankayala](https://github.com/PraneethVankayala). Detailed explanation of this project can be found in the README of project directory.
 
 
 
