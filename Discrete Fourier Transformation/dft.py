@@ -43,4 +43,5 @@ log_transformed = c * np.log(1 + img)
 log_transformed = np.array(log_transformed, dtype = np.uint8) 
 
 cv2.imshow(log_transformed, "transformed")
+cv2.imwrite("idft1.jpg", log_transformed)
 cv2.waitkey(0)
