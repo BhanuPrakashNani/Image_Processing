@@ -344,10 +344,9 @@ The function kmeans implements a k-means algorithm that finds the centers of clu
 The input parameters given to the function are _samples, K(no of clusters), criteria, attempts, flags._ In the below example, I haved used two criterias at the same time(cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER). To know more about these criteria go through the documentation mentioned below once.  
 The output parameters are _compactness, labels and centers_ where compactness is the sum of the squared distance from each point to thier corresponding centers.
 
-Original        |  K = 3         |  K = 5   |  K = 8
-:-------------------------:|:-------------------------:|:------------------:|:-----------------:|
-![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OpenCV%20KMeans/building.png)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OpenCV%20KMeans/k%3D8.jpg) |   ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OpenCV%20KMeans/k%3D5.jpg)  | 
-![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OpenCV%20KMeans/k%3D3.jpg)
+Original        |  K = 3         |  K = 5
+:-------------------------:|:-------------------------:|:----------------------------:|
+![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OpenCV%20KMeans/building.png)  |    ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OpenCV%20KMeans/k%3D8.jpg) |   ![](https://github.com/BhanuPrakashNani/Image_Processing/blob/master/OpenCV%20KMeans/k%3D5.jpg)
 
 To know more about the KMeans algorithm and usage in terms of OpenCV, check it out [here](https://docs.opencv.org/master/d1/d5c/tutorial_py_kmeans_opencv.html).  
 
