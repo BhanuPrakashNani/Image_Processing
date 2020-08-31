@@ -352,6 +352,9 @@ To know more about the KMeans algorithm and usage in terms of OpenCV, check it o
 
 ### 34. Object Movement Tracking - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Object%20Movement%20Tracking)
 
+Here we try to detect the presence of a colored ball using computer vision techniques and then track the ball as it moves around in the video frames, drawing its previous positions as it moves. I have taken the reference for this particular topic from [here](https://www.pyimagesearch.com/2015/09/14/ball-tracking-with-opencv/). It is a great blog written by Adrian Rosebrock.
+
+
 ### 35. Live Hand Gesture Recognition - [Code](https://github.com/BhanuPrakashNani/Image_Processing/tree/master/Live%20Hand%20Gesture%20Recognition)
 This is a Digital Image Processing project in collaboration with [Abhishek BVS](https://github.com/abhishekbvs/) and [Praneeth Vankayala](https://github.com/PraneethVankayala). Detailed explanation of this project can be found in the README of project directory.
 
