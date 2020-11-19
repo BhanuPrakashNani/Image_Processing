@@ -1,4 +1,4 @@
-# Image_Processing
+# Road To Pixels
 Welcome aboard. With the growing technologies out in the world, we have seen how important Image Processing has become. This repository provides a complete understanding of the practical implementation of all the concepts to be known for a developer to start their Image Processing journey. 
 
 ## Contents
