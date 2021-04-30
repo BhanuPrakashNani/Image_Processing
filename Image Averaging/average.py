@@ -1,33 +1,3 @@
-Open Lab: Digital Image ProcessingCSE S6
-Due Jan 4, 11:59 PM
-Basics with images
-100 points
-Ram Kumar Dec 9, 2019 (Edited Dec 20, 2019)
-2019-12-09.pdf
-PDF
-resources.txt
-Text
-Your work
-Turned in
-lab2.py
-Text
-Private comments
-5 class comments
-mummaneni prabhathJan 8
-sir,
- you said you will change the due date of  assignment
-Ram KumarJan 8
-Well I did change once to Dec 9. Most of them have completed. 
-
-Not going to postpone again.
-mummaneni prabhathJan 8
-Last class you said you will give time for two more days,  for rotation of image question
-.
-Ram KumarJan 8
-You can still upload despite the deadline.
-mummaneni prabhathJan 9
-ok sir.
-
 import numpy as np
 import argparse as ap
 import cv2
@@ -101,6 +71,3 @@ for i,j in zip(f,t):
 k = k.astype(np.uint8)
 cv2.imshow("", k)
 cv2.waitKey()
-
-lab2.py
-Page 1 of 1
