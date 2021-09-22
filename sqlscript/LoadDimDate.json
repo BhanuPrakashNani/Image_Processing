@@ -1,0 +1,20 @@
+{
+	"name": "LoadDimDate",
+	"properties": {
+		"folder": {
+			"name": "Patient Experience"
+		},
+		"content": {
+			"query": "--Creates a table called RPT.Calendar. Change the table name on line 69. Change date range on line 2.\nDECLARE @StartDate DATE = '20100101', @NumberOfYears INT = 15;\nCREATE TABLE #dimdate\n(\n[date] DATE,\n[day] tinyint,\n[month] tinyint,\nFirstOfMonth date,\n[MonthName] varchar(12),\n[week] tinyint,\n[ISOweek] tinyint,\n[DayOfWeek] tinyint,\n[quarter] tinyint,\n[year] smallint,\nFirstOfYear date,\nStyle112 char(8),\nStyle101 char(10)\n);\nSET DATEFIRST 7;\nSET DATEFORMAT mdy;\nSET LANGUAGE US_ENGLISH;\n\nDECLARE @CutoffDate DATE = DATEADD(YEAR, @NumberOfYears, @StartDate);\nINSERT #dimdate([date])\nSELECT d\nFROM\n(\nSELECT d = DATEADD(DAY, rn-1, @StartDate)\nFROM\n(\nSELECT TOP (DATEDIFF(DAY, @StartDate, @CutoffDate))\nrn = ROW_NUMBER() OVER (ORDER BY s1.[object_id])\nFROM sys.all_objects AS s1\nCROSS JOIN sys.all_objects AS s2\nORDER BY s1.[object_id]\n) AS x\n) AS y;\nUPDATE #DimDate\nset\n[day] = DATEPART(DAY, [date]),\n[month] = DATEPART(MONTH, [date]),\nFirstOfMonth = CONVERT(DATE, DATEADD(MONTH, DATEDIFF(MONTH, 0, [date]), 0)),\n[MonthName] = DATENAME(MONTH, [date]),\n[week] = DATEPART(WEEK, [date]),\n[ISOweek] = DATEPART(ISO_WEEK, [date]),\n[DayOfWeek] = DATEPART(WEEKDAY, [date]),\n[quarter] = DATEPART(QUARTER, [date]),\n[year] = DATEPART(YEAR, [date]),\nFirstOfYear = CONVERT(DATE, DATEADD(YEAR, DATEDIFF(YEAR, 0, [date]), 0)),\nStyle112 = CONVERT(CHAR(8), [date], 112),\nStyle101 = CONVERT(CHAR(10), [date], 101)\n;\nCREATE TABLE dbo.DimDate\nWITH\n(\nDISTRIBUTION = ROUND_ROBIN\n)\nAS\nSELECT\nDateKey = CONVERT(INT, Style112),\n[Date] = [date],\n[Day] = CONVERT(TINYINT, [day]),\nDaySuffix = CONVERT(CHAR(2), CASE WHEN [day] / 10 = 1 THEN 'th' ELSE\nCASE RIGHT([day], 1) WHEN '1' THEN 'st' WHEN '2' THEN 'nd'\nWHEN '3' THEN 'rd' ELSE 'th' END END),\n[Weekday] = CONVERT(TINYINT, [DayOfWeek]),\n[WeekDayName] = CONVERT(VARCHAR(10), DATENAME(WEEKDAY, [date])),\n[DOWInMonth] = CONVERT(TINYINT, ROW_NUMBER() OVER\n(PARTITION BY FirstOfMonth, [DayOfWeek] ORDER BY [date])),\n[DayOfYear] = CONVERT(SMALLINT, DATEPART(DAYOFYEAR, [date])),\nWeekOfMonth = CONVERT(TINYINT, DENSE_RANK() OVER\n(PARTITION BY [year], [month] ORDER BY [week])),\nWeekOfYear = CONVERT(TINYINT, [week]),\nISOWeekOfYear = CONVERT(TINYINT, ISOWeek),\n[Month] = CONVERT(TINYINT, [month]),\n[MonthName] = CONVERT(VARCHAR(10), [MonthName]),\n[Quarter] = CONVERT(TINYINT, [quarter]),\nQuarterName = CONVERT(VARCHAR(6), CASE [quarter] WHEN 1 THEN 'First'\nWHEN 2 THEN 'Second' WHEN 3 THEN 'Third' WHEN 4 THEN 'Fourth' END),\n[Year] = [year],\nMMYYYY = CONVERT(CHAR(6), LEFT(Style101, 2) + LEFT(Style112, 4)),\nMonthYear = CONVERT(CHAR(8), LEFT([MonthName], 3) + ' ' + LEFT(Style112, 4)),\nFirstDayOfMonth = FirstOfMonth,\nLastDayOfMonth = MAX([date]) OVER (PARTITION BY [year], [month]),\nFirstDayOfQuarter = MIN([date]) OVER (PARTITION BY [year], [quarter]),\nLastDayOfQuarter = MAX([date]) OVER (PARTITION BY [year], [quarter]),\nFirstDayOfYear = FirstOfYear,\nLastDayOfYear = MAX([date]) OVER (PARTITION BY [year]),\nFirstDayOfNextMonth = DATEADD(MONTH, 1, FirstOfMonth),\nFirstDayOfNextYear = DATEADD(YEAR, 1, FirstOfYear)\nFROM #dimdate;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "advcompplatsql",
+				"poolName": "advcompplatsql"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

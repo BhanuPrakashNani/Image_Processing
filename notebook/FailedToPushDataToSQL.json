@@ -1,0 +1,180 @@
+{
+	"name": "FailedToPushDataToSQL",
+	"properties": {
+		"folder": {
+			"name": "Patient Experience"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "PatientExpTest",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"kernelspec": {
+				"name": "synapse_spark",
+				"display_name": "Synapse Spark"
+			},
+			"language_info": {
+				"name": "scala"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/cbadd11e-0445-4ba0-91ab-56abcb4a2860/resourceGroups/rg-advancedcomputingplatform/providers/Microsoft.Synapse/workspaces/syn-advcomptest/bigDataPools/PatientExpTest",
+				"name": "PatientExpTest",
+				"type": "Spark",
+				"endpoint": "https://syn-advcomptest.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/PatientExpTest",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 3,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "scala"
+					}
+				},
+				"source": [
+					"%%spark\n",
+					"val rev_df = spark.read.sqlanalytics(\"advcompplatsql.dbo.staging_yelp_reviews\")\n",
+					"val bid_df = spark.read.sqlanalytics(\"advcompplatsql.dbo.DimFacilities\") "
+				],
+				"attachments": null,
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"rev_df.createOrReplaceTempView(\"rev_temp\")\r\n",
+					"bid_df.createOrReplaceTempView(\"bid_temp\")"
+				],
+				"attachments": null,
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%sql\r\n",
+					"select rev_temp.review_id,rev_temp.business_id,rev_temp.user_id,bid_temp.name,rev_temp.text1,rev_temp.text2,rev_temp.text3,rev_temp.text4,rev_temp.stars,rev_temp.useful,rev_temp.date from rev_temp, bid_temp where rev_temp.business_id like (select business_id from bid_temp)"
+				],
+				"attachments": null,
+				"execution_count": 9
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"val new_df = spark.sql(\"select rev_temp.review_id,rev_temp.business_id,rev_temp.user_id,bid_temp.name,rev_temp.text1,rev_temp.text2,rev_temp.text3,rev_temp.text4,rev_temp.stars,rev_temp.useful,rev_temp.date from rev_temp, bid_temp where rev_temp.business_id like (select business_id from bid_temp)\")"
+				],
+				"attachments": null,
+				"execution_count": 11
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "scala"
+					},
+					"collapsed": true
+				},
+				"source": [
+					"%%spark\r\n",
+					"new_df.write.sqlanalytics(\"advcompplatsql.dbo.FactYelpReviews\", Constants.INTERNAL)"
+				],
+				"attachments": null,
+				"execution_count": 14
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					""
+				],
+				"attachments": null,
+				"execution_count": null
+			}
+		]
+	}
+}

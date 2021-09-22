@@ -1,0 +1,1184 @@
+{
+	"name": "mPulse_SentimentExtraction_Final",
+	"properties": {
+		"folder": {
+			"name": "Patient Experience"
+		},
+		"nbformat": 0,
+		"nbformat_minor": 0,
+		"bigDataPool": {
+			"referenceName": "PatientExpTest",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/cbadd11e-0445-4ba0-91ab-56abcb4a2860/resourceGroups/rg-advancedcomputingplatform/providers/Microsoft.Synapse/workspaces/syn-advcomptest/bigDataPools/PatientExpTest",
+				"name": "PatientExpTest",
+				"type": "Spark",
+				"endpoint": "https://syn-advcomptest.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/PatientExpTest",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 3,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "f81f2e6a-d136-4cbb-b44d-23d1806938dd"
+					}
+				},
+				"source": [
+					"##################### Run the below commands ############################################################"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "bcae4a9b-e09e-4ad5-bf53-c11ad4eea3a6"
+					}
+				},
+				"source": [
+					"!pip install nltk\n",
+					"!pip install pycountry\n",
+					"!pip install iso639\n",
+					"!pip install spacy\n",
+					"!pip install spacy_langdetect\n",
+					"!pip3 install vaderSentiment\n",
+					"!pip install googletrans==3.1.0a0\n",
+					"# !pip install 'dbfs:/FileStore/jars/2c2d86d5_d82e_40bc_bf9f_1ed3dfdc1b29/xx_ent_wiki_sm-3.1.0-py3-none-any.whl'"
+				],
+				"attachments": null,
+				"execution_count": 18
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "99b6cb70-7da9-48c6-9a5b-4910247b007d"
+					}
+				},
+				"source": [
+					"#!pip install --upgrade tensorflow\n",
+					"#!pip install --upgrade tensorflow-gpu\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "c9cae52e-2c93-4038-87e5-b1a0b8968476"
+					}
+				},
+				"source": [
+					"import pandas as pd\n",
+					"import numpy as np\n",
+					"import gc\n",
+					"import pickle\n",
+					"import matplotlib.pyplot as plt\n",
+					"import operator\n",
+					"import seaborn as sns\n",
+					"from wordcloud import WordCloud,STOPWORDS\n",
+					"from collections import Counter\n",
+					"from sklearn.model_selection import train_test_split\n",
+					"from sklearn.preprocessing import LabelEncoder\n",
+					"from sklearn import model_selection,metrics\n",
+					"from sklearn.metrics import confusion_matrix\n",
+					"from nltk.corpus import stopwords\n",
+					"from nltk.tokenize import RegexpTokenizer \n",
+					"import time\n",
+					"import io\n",
+					"from tqdm import tqdm\n",
+					"import os, re, csv, math, codecs\n",
+					"\n",
+					"# coding: utf-8\n",
+					"from gensim.models import KeyedVectors\n",
+					"from gensim.scripts.glove2word2vec import glove2word2vec\n",
+					"from gensim.parsing.preprocessing import remove_stopwords\n",
+					"import nltk\n",
+					"from nltk.corpus import stopwords\n",
+					"from  nltk.stem import SnowballStemmer\n",
+					"\n",
+					"pd.set_option('display.max_colwidth', None)\n",
+					"pd.set_option('display.max_rows', 200)"
+				],
+				"attachments": null,
+				"execution_count": 12
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "ba79340c-aa11-4567-8aff-731652c84272"
+					}
+				},
+				"source": [
+					"import tensorflow as tf  \n",
+					"from tensorflow import keras\n",
+					"from tensorflow.keras.callbacks import EarlyStopping,ModelCheckpoint\n",
+					"from tensorflow.keras.utils import to_categorical\n",
+					"from tensorflow.keras.preprocessing.text import Tokenizer\n",
+					"from tensorflow.keras.preprocessing.sequence import pad_sequences\n",
+					"from tensorflow.keras.layers import Embedding,Conv1D,LSTM,GRU,BatchNormalization,Flatten,Dense"
+				],
+				"attachments": null,
+				"execution_count": 16
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "0af31260-dbf3-460a-8bdb-312a32c87656"
+					}
+				},
+				"source": [
+					"# from gensim.parsing.preprocessing import STOPWORDS\n",
+					"# STOPWORDS\n",
+					"\n",
+					"def removestopwords(line):\n",
+					"    stopwordslist=['a', 'about', 'above', 'after', 'again', 'against', 'ain', 'all', 'am', 'an', 'and', 'any', 'are', 'aren', 'as', 'at', 'be', 'because', 'been', 'before', 'being', 'below', 'between', 'both', 'by', 'can', 'couldn', 'd', 'did', 'didn', 'do', 'does', 'doesn', 'doing', 'don', 'down', 'during', 'each', 'few', 'for', 'from', 'further', 'had', 'hadn', 'has', 'hasn', 'have', 'haven', 'having', 'he', 'her', 'here', 'hers', 'herself', 'him', 'himself', 'his', 'how', 'i', 'if', 'in', 'into', 'is', 'isn', 'it', \"it's\", 'its', 'itself', 'just', 'll', 'm', 'ma', 'me', 'mightn', \"mightn't\", 'more', 'most', 'mustn', \"mustn't\", 'my', 'myself', 'needn', \"needn't\", 'nor','now', 'o', 'of', 'off', 'on', 'once', 'only', 'or', 'other', 'our', 'ours', 'ourselves', 'out', 'over', 'own', 're', 's', 'same', 'shan', \"shan't\", 'she', \"she's\", 'should', 'so', 'some', 'such', 't', 'than', 'that', \"that'll\", 'the', 'their', 'theirs', 'them', 'themselves', 'then', 'there', 'these', 'they', 'this', 'those', 'through', 'to', 'too', 'under', 'until', 'up', 've', 'was', 'wasn', 'we', 'were', 'weren','what', 'when', 'where', 'which', 'while', 'who', 'whom', 'why', 'will', 'with', 'won', 'wouldn', 'y', 'you', \"you'd\", \"you'll\", \"you're\", \"you've\", 'your', 'yours', 'yourself', 'yourselves']\n",
+					"    \n",
+					"    words = [word for word in line.split() if word.lower().strip() not in stopwordslist]\n",
+					"    return \" \".join(words)\n",
+					"  \n",
+					"def clean_sentences(line):\n",
+					"    TEXT_CLEANING_RE = \"@\\S+|https?:\\S+|http?:\\S|[^A-Za-z0-9]+|( www\\.)[^ ]*\"\n",
+					"    # removing html tags\n",
+					"    line=re.sub('<.*?>','',line) \n",
+					"    #print(line)\n",
+					"    # Remove link,user and special characters\n",
+					"    line = re.sub(TEXT_CLEANING_RE, ' ', str(line).lower()).strip()\n",
+					"    #print(line)\n",
+					"    #Remove Stop Words\n",
+					"    line=removestopwords(line)\n",
+					"\n",
+					"    #print(line)\n",
+					"    return line\n",
+					"  \n",
+					"\n",
+					"def create_embedding_matrix(word_index, embedding_dict=None, d_model=100):\n",
+					"    \"\"\"\n",
+					"     this function create the embedding matrix save in numpy array\n",
+					"    :param word_index: a dictionary with word: index_value\n",
+					"    :param embedding_dict: a dict with word embedding\n",
+					"    :d_model: the dimension of word pretrained embedding, here I just set to 100, we will define again\n",
+					"    :return a numpy array with embedding vectors for all known words\n",
+					"    \"\"\"\n",
+					"    embedding_matrix = np.zeros((len(word_index) + 1, d_model))\n",
+					"    ## loop over all the words\n",
+					"    for word, index in word_index.items():\n",
+					"        if word in embedding_dict:\n",
+					"            embedding_matrix[index] = embedding_dict[word]\n",
+					"    return embedding_matrix\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 17
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "4bcfc271-8312-4b8f-9f55-f8002ebd4c39"
+					}
+				},
+				"source": [
+					"def clean_imdb(line):\n",
+					"    # TEXT CLENAING\n",
+					"    TEXT_CLEANING_RE = \"@\\S+|https?:\\S+|http?:\\S|[^A-Za-z0-9]+|( www\\.)[^ ]*\"\n",
+					"    # removing html tags\n",
+					"    line=re.sub('<.*?>','',line) \n",
+					"    # Remove link,user and special characters\n",
+					"    line = re.sub(TEXT_CLEANING_RE, ' ', str(line).lower()).strip()\n",
+					"    \n",
+					"    # Remove Stopords\n",
+					"    #line=remove_stopwords(line)\n",
+					"    \n",
+					"    #removing contractions\n",
+					"    line=re.sub(\"isn't\",'is not',line)\n",
+					"    line=re.sub(\"he's\",'he is',line)\n",
+					"    line=re.sub(\"wasn't\",'was not',line)\n",
+					"    line=re.sub(\"there's\",'there is',line)\n",
+					"    line=re.sub(\"couldn't\",'could not',line)\n",
+					"    line=re.sub(\"won't\",'will not',line)\n",
+					"    line=re.sub(\"they're\",'they are',line)\n",
+					"    line=re.sub(\"she's\",'she is',line)\n",
+					"    line=re.sub(\"There's\",'there is',line)\n",
+					"    line=re.sub(\"wouldn't\",'would not',line)\n",
+					"    line=re.sub(\"haven't\",'have not',line)\n",
+					"    line=re.sub(\"That's\",'That is',line)\n",
+					"    line=re.sub(\"you've\",'you have',line)\n",
+					"    line=re.sub(\"He's\",'He is',line)\n",
+					"    line=re.sub(\"what's\",'what is',line)\n",
+					"    line=re.sub(\"weren't\",'were not',line)\n",
+					"    line=re.sub(\"we're\",'we are',line)\n",
+					"    line=re.sub(\"hasn't\",'has not',line)\n",
+					"    line=re.sub(\"you'd\",'you would',line)\n",
+					"    line=re.sub(\"shouldn't\",'should not',line)\n",
+					"    line=re.sub(\"let's\",'let us',line)\n",
+					"    line=re.sub(\"they've\",'they have',line)\n",
+					"    line=re.sub(\"You'll\",'You will',line)\n",
+					"    line=re.sub(\"i'm\",'i am',line)\n",
+					"    line=re.sub(\"we've\",'we have',line)\n",
+					"    line=re.sub(\"it's\",'it is',line)\n",
+					"    line=re.sub(\"don't\",'do not',line)\n",
+					"    line=re.sub(\"that´s\",'that is',line)\n",
+					"    line=re.sub(\"I´m\",'I am',line)\n",
+					"    line=re.sub(\"it’s\",'it is',line)\n",
+					"    line=re.sub(\"she´s\",'she is',line)\n",
+					"    line=re.sub(\"he’s'\",'he is',line)\n",
+					"    line=re.sub('I’m','I am',line)\n",
+					"    line=re.sub('I’d','I did',line)\n",
+					"    line=re.sub(\"he’s'\",'he is',line)\n",
+					"    line=re.sub('there’s','there is',line)\n",
+					"    #special characters and emojis\n",
+					"    line=re.sub('\\x91The','The',line)\n",
+					"    line=re.sub('\\x97','',line)\n",
+					"    line=re.sub('\\x84The','The',line)\n",
+					"    line=re.sub('\\uf0b7','',line)\n",
+					"    line=re.sub('¡¨','',line)\n",
+					"    line=re.sub('\\x95','',line)\n",
+					"    line=re.sub('\\x8ei\\x9eek','',line)\n",
+					"    line=re.sub('\\xad','',line)\n",
+					"    line=re.sub('\\x84bubble','bubble',line)\n",
+					"    # remove concated words\n",
+					"    line=re.sub('trivialBoring','trivial Boring',line)\n",
+					"    line=re.sub('Justforkix','Just for kix',line)\n",
+					"    line=re.sub('Nightbeast','Night beast',line)\n",
+					"    line=re.sub('DEATHTRAP','Death Trap',line)\n",
+					"    line=re.sub('CitizenX','Citizen X',line)\n",
+					"    line=re.sub('10Rated','10 Rated',line)\n",
+					"    line=re.sub('_The','_ The',line)\n",
+					"    line=re.sub('1Sound','1 Sound',line)\n",
+					"    line=re.sub('blahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblah','blah blah',line)\n",
+					"    line=re.sub('ResidentHazard','Resident Hazard',line)\n",
+					"    line=re.sub('iameracing','i am racing',line)\n",
+					"    line=re.sub('BLACKSNAKE','Black Snake',line)\n",
+					"    line=re.sub('DEATHSTALKER','Death Stalker',line)\n",
+					"    line=re.sub('_is_','is',line)\n",
+					"    line=re.sub('10Fans','10 Fans',line)\n",
+					"    line=re.sub('Yellowcoat','Yellow coat',line)\n",
+					"    line=re.sub('Spiderbabe','Spider babe',line)\n",
+					"    line=re.sub('Frightworld','Fright world',line)\n",
+					"        \n",
+					"    return \" \".join([x for x in line.split()])"
+				],
+				"attachments": null,
+				"execution_count": 18
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "ff1fc382-fd0c-4f2a-99d6-dcce041cd607"
+					}
+				},
+				"source": [
+					"##################### Stop running here and contimue from below #################################################"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "36d49548-1939-4501-bf39-39aff3d4c7c8"
+					}
+				},
+				"source": [
+					"########### Trainin starts  ##################################"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "dfbcc3d8-224e-4a1e-9994-9ae48fa1367a"
+					}
+				},
+				"source": [
+					"# imdb_data=pd.read_csv('/dbfs/FileStore/shared_uploads/sowmya.gunda@providence.org/IMDB_Dataset.csv')\n",
+					"pyspark_imdb_data = spark.read.load('abfss://synapse@dlsadvcomptest.dfs.core.windows.net/Test/IMDB Dataset.csv', format='csv'\n",
+					"## If header exists uncomment line below\n",
+					"##, header=True\n",
+					")\n",
+					"imdb_data = pyspark_imdb_data.toPandas()\n",
+					"\n",
+					"# imdb_data = pd.read_csv(spark.read.load('abfss://synapse@dlsadvcomptest.dfs.core.windows.net/Test/IMDB Dataset.csv',format='csv'))\n",
+					"# print(imdb_data.shape,imdb_data.sentiment.unique(),imdb_data.isnull().sum())\n",
+					"\n",
+					"le=LabelEncoder()\n",
+					"imdb_data['sentiment']= le.fit_transform(imdb_data['sentiment'])\n",
+					"imdb_data['review_processed']=imdb_data['review'].apply(lambda x: clean_imdb(x))\n",
+					"labels=to_categorical(imdb_data['sentiment'],num_classes=2)\n",
+					"imdb_data.head(2)"
+				],
+				"attachments": null,
+				"execution_count": 17
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "1b04cd3e-e2b8-4803-b5b6-7354112fc906"
+					}
+				},
+				"source": [
+					"print('loading glove embeddings...')\n",
+					"f = codecs.open('/dbfs/FileStore/shared_uploads/sowmya.gunda@providence.org/glove.6B.100d.txt', encoding='utf-8')\n",
+					"glove_embeddings = {}\n",
+					"for line in tqdm(f):\n",
+					"    values = line.rstrip().rsplit(' ')\n",
+					"    word = values[0]\n",
+					"    coefs = np.asarray(values[1:], dtype='float32')\n",
+					"    glove_embeddings[word] = coefs\n",
+					"f.close()\n",
+					"type(glove_embeddings),glove_embeddings['hello'].shape,glove_embeddings['hello']"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "7beaa2f7-00a9-4c15-9e9f-0a7a30c115cd"
+					}
+				},
+				"source": [
+					"X_train,X_test,Y_train,Y_test = train_test_split(imdb_data['review_processed'],labels,test_size=0.2,random_state=10)\n",
+					"\n",
+					"X_train=X_train.apply(lambda s: clean_sentences(s))\n",
+					"X_test=X_test.apply(lambda s: clean_sentences(s))\n",
+					"\n",
+					"tokenizerfile='glove100_tokenizer.pickle'\n",
+					"tokenizer=Tokenizer()\n",
+					"tokenizer.fit_on_texts(X_train)\n",
+					"word_index=tokenizer.word_index\n",
+					"total_vocab=len(word_index)+1\n",
+					"print(\"Vocabulary of the dataset is : \",total_vocab)\n",
+					"\n",
+					"# saving\n",
+					"with open(tokenizerfile, 'wb') as handle:\n",
+					"    pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)\n",
+					"    \n",
+					"sequences_train=tokenizer.texts_to_sequences(X_train)\n",
+					"sequences_test=tokenizer.texts_to_sequences(X_test)\n",
+					"\n",
+					"MAX_LENGTH=1500\n",
+					"max_len=max(max([len(x) for x in sequences_train]),MAX_LENGTH)\n",
+					"\n",
+					"train_padded=pad_sequences(sequences_train,maxlen=max_len)\n",
+					"test_padded=pad_sequences(sequences_test,maxlen=max_len)\n",
+					"\n",
+					"X_train,X_val,Y_train,Y_val=train_test_split(train_padded,Y_train, test_size=0.1,random_state=10)\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "99aec677-46bc-42b1-88ee-39ab76dbcc17"
+					}
+				},
+				"source": [
+					"%sh\n",
+					"cp glove100_tokenizer.pickle '/dbfs/FileStore/shared_uploads/sowmya.gunda@providence.org/'"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "3795ae50-81e2-441a-828d-8726039bd75d"
+					}
+				},
+				"source": [
+					"print(\"shape of imdb dataset\",imdb_data.shape)\n",
+					"print(\"shape of train data: \",X_train.shape,Y_train.shape)\n",
+					"print(\"shape of validation data: \",X_val.shape,Y_val.shape)\n",
+					"print(\"shape of test data: \",X_test.shape,Y_test.shape)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "c4ddaeeb-0ccc-44df-a8d6-c74bc778cd73"
+					}
+				},
+				"source": [
+					"embeddings_dim=100\n",
+					"print(total_vocab,max_len,embeddings_dim)\n",
+					"\n",
+					"#### glove_embeddings\n",
+					"embedding_vectors = create_embedding_matrix(tokenizer.word_index, embedding_dict=glove_embeddings, d_model=embeddings_dim)\n",
+					"len(embedding_vectors)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "4e6ef064-925f-4767-8b9e-17e941b4c21c"
+					}
+				},
+				"source": [
+					"gc.collect()"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "df88270c-e5c4-47af-8330-6bdd44fa0ba1"
+					}
+				},
+				"source": [
+					"model= keras.Sequential()\n",
+					"model.add(Embedding(total_vocab,output_dim=embeddings_dim, weights=[embedding_vectors],input_length=max_len, trainable=True))\n",
+					"model.add(Conv1D(256,10,activation='relu'))\n",
+					"model.add(keras.layers.Bidirectional(LSTM(128,return_sequences=True)))\n",
+					"model.add(LSTM(64))\n",
+					"model.add(keras.layers.Dropout(0.4))\n",
+					"model.add(Dense(2,activation='softmax'))\n",
+					"model.compile(loss='binary_crossentropy',  optimizer='adam',  metrics=['accuracy'] )\n",
+					"model.summary()"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "c89ab5bd-0bf2-4bba-95f3-73ddce975ed2"
+					}
+				},
+				"source": [
+					"es= EarlyStopping(monitor='val_accuracy', patience=2 )\n",
+					"checkpoints=ModelCheckpoint(filepath='./', monitor=\"val_accuracy\", verbose=0, save_best_only=True )\n",
+					"callbacks=[es,checkpoints]\n",
+					"history=model.fit(X_train,Y_train,validation_data=(X_val,Y_val),epochs=5,callbacks=callbacks)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "80497202-a0b2-4e0b-94db-5bdf8cb62dda"
+					}
+				},
+				"source": [
+					"print(\"Accuracy of the model on Test Data is - \" , model.evaluate(test_padded,Y_test)[1]*100)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "66553069-6284-48f4-ba22-ff9ff863c29d"
+					}
+				},
+				"source": [
+					"# Evaluate model on the test set\n",
+					"loss, metrics = model.evaluate(test_padded, Y_test, verbose=0)\n",
+					"# Print metrics\n",
+					"print(metrics)\n",
+					"# print('Accuracy  : {:.4f}'.format(accuracy))\n",
+					"# print('Precision : {:.4f}'.format(precision))\n",
+					"# print('Recall    : {:.4f}'.format(recall))\n",
+					"# print('F1 Score  : {:.4f}'.format(f1_score(precision, recall)))\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "2bb8c70b-41fd-45c5-b35d-317768da063c"
+					}
+				},
+				"source": [
+					"from sklearn.metrics import confusion_matrix\n",
+					"def plot_confusion_matrix(model, X_test, y_test):\n",
+					"    '''Function to plot confusion matrix for the passed model and the data'''\n",
+					"    \n",
+					"    sentiment_classes = ['Negative', 'Positive']\n",
+					"    \n",
+					"    # use model to do the prediction\n",
+					"    y_pred = model.predict(X_test)\n",
+					"    # compute confusion matrix\n",
+					"    cm = confusion_matrix(np.argmax(np.array(y_test),axis=1), np.argmax(y_pred, axis=1))\n",
+					"    # plot confusion matrix\n",
+					"    plt.figure(figsize=(8,6))\n",
+					"    sns.heatmap(cm, cmap=plt.cm.Blues, annot=True, fmt='d', \n",
+					"                xticklabels=sentiment_classes,\n",
+					"                yticklabels=sentiment_classes)\n",
+					"    plt.title('Confusion matrix', fontsize=16)\n",
+					"    plt.xlabel('Actual label', fontsize=12)\n",
+					"    plt.ylabel('Predicted label', fontsize=12)\n",
+					"    \n",
+					"plot_confusion_matrix(model, test_padded, Y_test)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "888469c6-7215-4adf-a1a4-3a55f9337a3c"
+					}
+				},
+				"source": [
+					"model.save('sowmya/glove100d_model.h5')"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "e273b0f1-5a28-4227-8df8-847e15174b0e"
+					}
+				},
+				"source": [
+					"%sh\n",
+					"cp 'sowmya/glove100d_model.h5' '/dbfs/FileStore/shared_uploads/sowmya.gunda@providence.org/glove100d_model.h5'"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "4556a422-7321-4317-92cf-407a14b2fdfb"
+					}
+				},
+				"source": [
+					"############################# Training ends ####################################"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "c85eefa0-1996-4aa3-8d59-ddee20bcbb00"
+					}
+				},
+				"source": [
+					"################### Contine exceution from below ############################################"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "f567e50b-c26a-4e3e-8d36-7234a3b2fdc6"
+					}
+				},
+				"source": [
+					"from tensorflow.keras.models import load_model\n",
+					"import pickle\n",
+					"from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer\n",
+					"import spacy\n",
+					"nlp = spacy.load(\"en_core_web_sm\")\n",
+					"sid_obj = SentimentIntensityAnalyzer()\n",
+					"\n",
+					"# Load model\n",
+					"model_final = load_model('/dbfs/FileStore/shared_uploads/sowmya.gunda@providence.org/glove100d_model.h5')\n",
+					"max_len=1500\n",
+					"\n",
+					"with open('/dbfs/FileStore/shared_uploads/sowmya.gunda@providence.org/glove100_tokenizer.pickle', 'rb') as handle:\n",
+					"    tokenizer_final = pickle.load(handle)\n",
+					"    \n",
+					"def predict_class(text):\n",
+					"    '''Function to predict sentiment class of the passed data'''\n",
+					"    max_len=1500\n",
+					"    # Transforms text to a sequence of integers using a tokenizer object\n",
+					"    xt = tokenizer_final.texts_to_sequences(text)\n",
+					"    # Pad sequences to the same length\n",
+					"    xt = pad_sequences(xt, maxlen=max_len)\n",
+					"    # Do the prediction using the loaded model\n",
+					"    yt = model_final.predict(xt).argmax(axis=-1)\n",
+					"    return yt"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "cf931cda-a704-4c09-b75f-9154f96e204d"
+					}
+				},
+				"source": [
+					"data=pd.read_csv('/dbfs/FileStore/shared_uploads/sowmya.gunda@providence.org/mPulse/WHS_mPULSE_Survey.csv')\n",
+					"data=data[['UNIQUE_SURVEY_ID','Language','Q8','Q11']] #'Q7',,'Q11'\n",
+					"data.shape,data.isnull().sum()"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "25b28125-5c79-40d2-9146-cf308f4f1278"
+					}
+				},
+				"source": [
+					"data.loc[data.UNIQUE_SURVEY_ID.isin(['uoYBDf','PsRcxc']),'Language']='English'"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "f97e365d-9400-40ca-a72a-0919245c2ea2"
+					}
+				},
+				"source": [
+					"data['Q8_original']=data['Q8'].apply(lambda x: np.nan if ((x is np.nan) or (''.__eq__(x))) else x.lower().strip())\n",
+					"data['Q8']=data['Q8_original'].apply(lambda x: np.nan if ((x is not np.nan) and (x in (['no','none','n/a','na'])) or (x is np.nan) or (''.__eq__(x))) else x)\n",
+					"data['Q8_processed']=data['Q8'].apply(lambda s:  ' ' if s is np.nan else s)\n",
+					"data.head(2)\n",
+					"# loading\n",
+					"#englishdata['Q8_processed']=englishdata['Q8'].apply(lambda s:  ' ' if s is np.nan else clean_sentences(s))"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "3140c85c-12a5-4c20-9455-acb0c619ca1e"
+					}
+				},
+				"source": [
+					"data['Q11_original']=data['Q11'].apply(lambda x: np.nan if ((x is np.nan) or (''.__eq__(x))) else x.lower().strip())\n",
+					"data['Q11']=data['Q11_original'].apply(lambda x: np.nan if ((x is not np.nan) and (x in (['no','none','n/a','na'])) or (x is np.nan) or (''.__eq__(x))) else x)\n",
+					"data['Q11_processed']=data['Q11'].apply(lambda s:  ' ' if s is np.nan else s)\n",
+					"data.head(2)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "e8cae61a-2f8c-47f7-8e6a-87fde867e3e3"
+					}
+				},
+				"source": [
+					"englishdata_Q8=data.loc[(data.Language!='Spanish')&(~data['Q8'].isnull())]\n",
+					"nonenglishdata_Q8=data.loc[(data.Language=='Spanish')|(data['Q8'].isnull())]\n",
+					"data.shape,englishdata_Q8.shape,nonenglishdata_Q8.shape,englishdata_Q8.isnull().sum()\n",
+					"### 0 index-negative ; 1 index-positive"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "419ece59-9c94-44b7-807d-35aeb5abcde4"
+					}
+				},
+				"source": [
+					"englishdata_Q8['dl_SentimentPredicted_Q8']=predict_class(englishdata_Q8['Q8_processed'])\n",
+					"englishdata_Q8['vader_Sentiment_Q8']=englishdata_Q8['Q8_processed'].apply(lambda x: sid_obj.polarity_scores(x))\n",
+					"englishdata_Q8['vader_SentimentPredicted_Q8']=englishdata_Q8['vader_Sentiment_Q8'].apply(lambda x: 1 if (x['pos']>=x['neg'] and x['compound']>=0) else 0)\n",
+					"print(\"dl_SentimentPredicted_Q8\",englishdata_Q8.dl_SentimentPredicted_Q8.value_counts())\n",
+					"print(\"vader_SentimentPredicted_Q8\",englishdata_Q8.vader_SentimentPredicted_Q8.value_counts())\n",
+					"englishdata_Q8.groupby(['dl_SentimentPredicted_Q8','vader_SentimentPredicted_Q8']).UNIQUE_SURVEY_ID.count().reset_index()"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "6d1aaab2-9e20-4dae-a44a-b145a591ccd9"
+					}
+				},
+				"source": [
+					"englishdata_Q8.columns,nonenglishdata_Q8.columns"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "1c52165f-89b9-4223-be99-aae88993b931"
+					}
+				},
+				"source": [
+					"nonenglishdata_Q8[['dl_SentimentPredicted_Q8', 'vader_Sentiment_Q8', 'vader_SentimentPredicted_Q8']]='','',''"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "85d8ed19-6f93-49bb-8288-7f81999c390f"
+					}
+				},
+				"source": [
+					"englishdata_Q11=data.loc[(data.Language!='Spanish')&(~data['Q11'].isnull())]\n",
+					"nonenglishdata_Q11=data.loc[(data.Language=='Spanish')|(data['Q11'].isnull())]\n",
+					"data.shape,englishdata_Q11.shape,nonenglishdata_Q11.shape,englishdata_Q11.isnull().sum()"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "08a980d9-90b3-4d6d-8284-0d49dd323cd1"
+					}
+				},
+				"source": [
+					"englishdata_Q11['dl_SentimentPredicted_Q11']=predict_class(englishdata_Q11['Q11_processed'])\n",
+					"englishdata_Q11['vader_Sentiment_Q11']=englishdata_Q11['Q11_processed'].apply(lambda x: sid_obj.polarity_scores(x))\n",
+					"englishdata_Q11['vader_SentimentPredicted_Q11']=englishdata_Q11['vader_Sentiment_Q11'].apply(lambda x: 1 if (x['pos']>=x['neg'] and x['compound']>=0) else 0)\n",
+					"print(\"dl_SentimentPredicted_Q11\",englishdata_Q11.dl_SentimentPredicted_Q11.value_counts())\n",
+					"print(\"vader_SentimentPredicted_Q11\",englishdata_Q11.vader_SentimentPredicted_Q11.value_counts())\n",
+					"englishdata_Q11.groupby(['dl_SentimentPredicted_Q11','vader_SentimentPredicted_Q11']).UNIQUE_SURVEY_ID.count().reset_index()"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "05f9a147-4455-4b33-ba92-60b32a261373"
+					}
+				},
+				"source": [
+					"nonenglishdata_Q11[['dl_SentimentPredicted_Q11', 'vader_Sentiment_Q11', 'vader_SentimentPredicted_Q11']]='','',''"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "64c4d904-6169-4f55-a627-f4df52f218f8"
+					}
+				},
+				"source": [
+					"combineddata_8=pd.concat([englishdata_Q8,nonenglishdata_Q8])\n",
+					"#combineddata_8[['dl_SentimentPredicted_Q11', 'vader_Sentiment_Q11', 'vader_SentimentPredicted_Q11']]='','',''\n",
+					"combineddata_11=pd.concat([englishdata_Q11,nonenglishdata_Q11])\n",
+					"#combineddata_11[['dl_SentimentPredicted_Q8', 'vader_Sentiment_Q8', 'vader_SentimentPredicted_Q8']]='','',''\n",
+					"print(combineddata_8.shape,combineddata_11.shape,\"\\n\",combineddata_8.columns,combineddata_11.columns)\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "ea5c6918-e5d8-4b15-a2a7-0b5827808012"
+					}
+				},
+				"source": [
+					"finaldf=combineddata_8.merge(combineddata_11,how='inner',on=['UNIQUE_SURVEY_ID', 'Language', 'Q8', 'Q11', 'Q8_original','Q8_processed', 'Q11_original', 'Q11_processed'])\n",
+					"finaldf.shape,finaldf.head(),finaldf.columns,finaldf.isnull().sum()"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "f3c2e92e-3994-40d9-b1f4-78e92ad72010"
+					}
+				},
+				"source": [
+					"# word=str('mojgon is excellent')\n",
+					"# predict_class(pd.Series(word)),sid_obj.polarity_scores(word)\n",
+					"# chk=nlp(word)\n",
+					"# for token in chk:\n",
+					"#   print(token.text,token.pos_)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "b1642912-ad76-44ce-a1d2-d72dd1b6ddb0"
+					}
+				},
+				"source": [
+					"finaldf.drop(columns=['postive_Q8',  'negative_Q8', 'postive_subject_Q8', 'negative_subject_Q8','postive_Q11', 'negative_Q11', 'postive_subject_Q11', 'negative_subject_Q11'],inplace=True)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "cbe5905e-88f0-4c41-a3b5-fe2b46d5d3e7"
+					}
+				},
+				"source": [
+					"def extract_pos2(sentences,Qno):\n",
+					"  positive,negative=[],[]\n",
+					"  sentiments={}\n",
+					"  pos_sub,neg_sub=[],[]\n",
+					"  for sentence in sentences.split('.'):\n",
+					"    doc=nlp(sentence)\n",
+					"    sentiment=sid_obj.polarity_scores(sentence)\n",
+					"     \n",
+					"    if (sentiment['pos']>=sentiment['neg'] and sentiment['compound']>=0):sentiment=1\n",
+					"    else:sentiment=0\n",
+					"      \n",
+					"    sent=[]\n",
+					"    for token in doc:\n",
+					"          if (token.pos_=='ADJ'):\n",
+					"              phrase =''\n",
+					"              for sub_tok in token.lefts:\n",
+					"                  if ((sub_tok.pos_ in (['ADV','PART','VERB']))):\n",
+					"                      phrase += sub_tok.text\n",
+					"                      if sub_tok.text in sent: sent.remove(sub_tok.text)\n",
+					"                      phrase += ' '+token.text \n",
+					"                      sent.append(phrase)\n",
+					"              if phrase =='':\n",
+					"                sent.append(token.text)\n",
+					"#           elif token.pos_ in ['ADV']:\n",
+					"#             sent.append(token.text)\n",
+					"          if (token.dep_=='nsubj')&(token.is_stop==False):\n",
+					"              if sentiment==1:pos_sub.append(token.text)\n",
+					"              else:neg_sub.append(token.text)\n",
+					"                \n",
+					"    if sentiment==1:positive.extend(sent)\n",
+					"    else:negative.extend(sent)\n",
+					"      \n",
+					"  sentiments['positive'+'_'+Qno]=positive\n",
+					"  sentiments['negative'+'_'+Qno]=negative\n",
+					"  sentiments['positive_subject'+'_'+Qno]=pos_sub\n",
+					"  sentiments['negative_subject'+'_'+Qno]=neg_sub\n",
+					"  return sentiments\n",
+					"\n",
+					"finaldf['vader_sentiments2']=finaldf['Q8_processed'].apply(lambda x: extract_pos2(x,'Q8'))\n",
+					"finaldf=pd.concat([finaldf.drop(['vader_sentiments2'], axis=1), finaldf['vader_sentiments2'].apply(pd.Series)], axis=1)\n",
+					"\n",
+					"finaldf['vader_sentiments2']=finaldf['Q11_processed'].apply(lambda x: extract_pos2(x,'Q11'))\n",
+					"finaldf=pd.concat([finaldf.drop(['vader_sentiments2'], axis=1), finaldf['vader_sentiments2'].apply(pd.Series)], axis=1)\n",
+					"finaldf.shape,finaldf.columns"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "099f2950-48f0-4366-b044-e40d44df4076"
+					}
+				},
+				"source": [
+					"print(finaldf.head().T)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "82543925-b1e9-4c30-b7c9-27e0608b622b"
+					}
+				},
+				"source": [
+					"# englishdata['postive']= englishdata['postive'].apply(lambda x: \",\".join(x))\n",
+					"# englishdata['negative']= englishdata['negative'].apply(lambda x: \",\".join(x))\n",
+					"def combine_values(data,col):\n",
+					"  data[col]=data[col].apply(lambda x: \",\".join(x))\n",
+					"  return data\n",
+					"\n",
+					"for col in ['positive_Q8',  'negative_Q8', 'positive_subject_Q8', 'negative_subject_Q8','positive_Q11', 'negative_Q11', 'positive_subject_Q11', 'negative_subject_Q11']:\n",
+					"  combine_values(finaldf,col)\n",
+					"  \n",
+					"finaldf.head()"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "3532e1a0-fc54-4195-af76-2238b303b558"
+					}
+				},
+				"source": [
+					"finaldf.head(10)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "c336a32f-6f4d-45dc-89a8-d949d37cc492"
+					}
+				},
+				"source": [
+					"finaldf.columns"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "6102de0f-26d1-4fe8-856c-5266c32d4183"
+					}
+				},
+				"source": [
+					"cols=['UNIQUE_SURVEY_ID','Q8', 'Q11', 'dl_SentimentPredicted_Q8','dl_SentimentPredicted_Q11','positive_Q8',\n",
+					"       'negative_Q8', 'positive_subject_Q8', 'negative_subject_Q8',\n",
+					"       'positive_Q11', 'negative_Q11', 'positive_subject_Q11', 'negative_subject_Q11']\n",
+					"final_result=finaldf[cols]\n",
+					"final_result.shape\n",
+					"final_result.head()"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "138cf496-ecbd-4827-a8fd-94dd2557bbc0"
+					}
+				},
+				"source": [
+					"final_result.to_csv('Mpulse_PatientSurvey_Sentiment_Keywords_Overall.csv')"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "e24a3c67-5afd-45f5-ba46-250742ab7c93"
+					}
+				},
+				"source": [
+					"%sh\n",
+					"cp 'Mpulse_PatientSurvey_Sentiment_Keywords_Overall.csv' '/dbfs/FileStore/shared_uploads/sowmya.gunda@providence.org/Mpulse_PatientSurvey_Sentiment_Keywords_Overall.csv'"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "a77dcf48-562b-4b76-8ca3-47603cdf10ec"
+					}
+				},
+				"source": [
+					"#https://www.learntospark.com/2021/04/download-data-from-dbfs-to-local.html\n",
+					"# https://adb-7304640848206483.3.azuredatabricks.net/?o=7304640848206483#notebook/2732585039190043/command/2835946513283059\n",
+					"# /dbfs/FileStore/shared_uploads/sowmya.gunda@providence.org/Mpulse_PatientSurvey_Sentiment_Keywords.csv\n",
+					"\n",
+					"\n",
+					"# https://adb-7304640848206483.3.azuredatabricks.net/files/shared_uploads/sowmya.gunda@providence.org/M"
+				],
+				"attachments": null,
+				"execution_count": 0
+			}
+		]
+	}
+}

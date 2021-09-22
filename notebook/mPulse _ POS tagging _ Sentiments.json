@@ -1,0 +1,638 @@
+{
+	"name": "mPulse _ POS tagging _ Sentiments",
+	"properties": {
+		"nbformat": 0,
+		"nbformat_minor": 0,
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "python"
+			},
+			"language_info": {
+				"name": "python"
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "472a6566-ea3b-4788-94f6-a293c82d0ccd"
+					}
+				},
+				"source": [
+					"from transformers import pipeline\n",
+					"import pandas as pd\n",
+					"import numpy as np\n",
+					"import gc\n",
+					"import pickle\n",
+					"import matplotlib.pyplot as plt\n",
+					"import operator\n",
+					"import seaborn as sns\n",
+					"#from wordcloud import WordCloud,STOPWORDS\n",
+					"from collections import Counter\n",
+					"from nltk.corpus import stopwords\n",
+					"from nltk.tokenize import RegexpTokenizer \n",
+					"import time\n",
+					"import io\n",
+					"from tqdm import tqdm\n",
+					"import os, re, csv, math, codecs\n",
+					"import nltk.data\n",
+					"import nltk\n",
+					"from nltk import pos_tag\n",
+					"import pickle\n",
+					"from nltk.tokenize import word_tokenize, sent_tokenize"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "7c592c19-9e87-4548-9935-85e6c0b24eaa"
+					}
+				},
+				"source": [
+					"import warnings\n",
+					"warnings.filterwarnings(\"ignore\")"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "6a6975c4-7e2d-4428-ae1a-2fe052df6434"
+					}
+				},
+				"source": [
+					"import spacy\n",
+					"spacy_obj = spacy.load(\"en_core_web_sm\")"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "d8077428-d4fe-4a46-a987-939f0c4dfdea"
+					}
+				},
+				"source": [
+					"adjective_grammar = \"\"\"\n",
+					"    AP: \n",
+					"    {<PART>*<ADV>*<ADJ>+}\n",
+					"    \"\"\"\n",
+					"adj_chunk = nltk.RegexpParser(adjective_grammar)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "7fc69e06-ac69-4fb5-a46b-e8b0cec4495e"
+					}
+				},
+				"source": [
+					"noun_grammar = \"\"\"\n",
+					"    NP: {<NOUN>+}\n",
+					"    {<PROPN>+}\n",
+					"    \"\"\"\n",
+					"\n",
+					"noun_chunk = nltk.RegexpParser(noun_grammar)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "f70ab8c0-a522-4837-b44a-68e8e7283f1b"
+					}
+				},
+				"source": [
+					"sens = [\"hmr intro is very comprehensive.\", \"little things were disconcerting or impersonal.\", \"for example the only time anyone said my name was to ask for it and my date of birth.\", \"when purchasing food i was shocked to find the cost is by item and starting cost 200.\"]"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "9976975d-2002-4ac4-b20a-9d2bb3fef0ba"
+					}
+				},
+				"source": [
+					"def get_subjects(sentence):\n",
+					"  noun_detected = []\n",
+					"  tree = noun_chunk.parse(sentence)\n",
+					"  for subtree in tree.subtrees():\n",
+					"    if subtree.label() == 'NP':\n",
+					"      t = subtree\n",
+					"      t = ' '.join(word for word, tag in t.leaves())\n",
+					"      noun_detected.append(t)\n",
+					"  return noun_detected"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "c6c8f917-387c-463c-8c41-a5c3cb651452"
+					}
+				},
+				"source": [
+					"def get_phrases(sentence):\n",
+					"  adjectives_detected = []\n",
+					"  tree = adj_chunk.parse(sentence)\n",
+					"  for subtree in tree.subtrees():\n",
+					"    if subtree.label() == 'AP':\n",
+					"      t = subtree\n",
+					"      t = ' '.join(word for word, tag in t.leaves())\n",
+					"      adjectives_detected.append(t)\n",
+					"  return adjectives_detected"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "16597b9b-df69-4b17-bc7d-3a52932451b7"
+					}
+				},
+				"source": [
+					"data=pd.read_csv('/dbfs/FileStore/shared_uploads/sowmya.gunda@providence.org/mPulse/WHS_mPULSE_Survey.csv')"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "cde495d4-7b86-480e-b2fb-7b5b0c3a7f34"
+					}
+				},
+				"source": [
+					"def do_the_preprocessing(text):\n",
+					"  if (((text is not np.nan) and (text.lower().strip() in (['no','none','n/a','n/ a', 'na']))) or (text is np.nan) or (''.__eq__(text))): \n",
+					"    return ' '\n",
+					"  if len(text.lower().strip())<=2:\n",
+					"    return ' '\n",
+					"  else:\n",
+					"    return text.strip()"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "1d2e4c73-aa1b-453f-a50e-01f64710410d"
+					}
+				},
+				"source": [
+					"import re\n",
+					"def decontracted_preprocessing(phrase):\n",
+					"    # specific\n",
+					"    phrase = re.sub(r\"won\\'t\", \"will not\", phrase)\n",
+					"    phrase = re.sub(r\"can\\'t\", \"can not\", phrase)\n",
+					"\n",
+					"    # general\n",
+					"    phrase = re.sub(r\"n\\'t\", \" not\", phrase)\n",
+					"    phrase = re.sub(r\"\\'re\", \" are\", phrase)\n",
+					"    phrase = re.sub(r\"\\'s\", \" is\", phrase)\n",
+					"    phrase = re.sub(r\"\\'d\", \" would\", phrase)\n",
+					"    phrase = re.sub(r\"\\'ll\", \" will\", phrase)\n",
+					"    phrase = re.sub(r\"\\'t\", \" not\", phrase)\n",
+					"    phrase = re.sub(r\"\\'ve\", \" have\", phrase)\n",
+					"    phrase = re.sub(r\"\\'m\", \" am\", phrase)\n",
+					"    return phrase"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "60ead4de-910e-45b1-b6e3-86123a8ae8e5"
+					}
+				},
+				"source": [
+					"data['Q8_preprocessed'] = data['Q8'].apply(do_the_preprocessing)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "5fcf7650-a76a-4d60-92f0-15a33543dee4"
+					}
+				},
+				"source": [
+					"data['Q8_preprocessed'] = data['Q8_preprocessed'].apply(decontracted_preprocessing)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "c71c9b82-5977-4733-9e3c-a9ea3a1011ad"
+					}
+				},
+				"source": [
+					"def split_tokens(sentences):\n",
+					"  return sent_tokenize(sentences)\n",
+					"\n",
+					"data['Q8_preprocessed'] = data['Q8_preprocessed'].apply(split_tokens)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "c87f693a-6e87-49e4-adba-4d504288bd3b"
+					}
+				},
+				"source": [
+					"punctuation_characters = '''‘!”#$%'()*+,-:;?@[\\]^_`{|}~’'''\n",
+					"\n",
+					"def remove_punctuation(text_lists):\n",
+					"    \"\"\"custom function to remove the punctuation\"\"\"\n",
+					"    text_lists = list(map(lambda x: x.replace('&', ' and '), text_lists))\n",
+					"    text_lists = list(map(lambda x: x.lower(), text_lists))\n",
+					"    return list(filter(lambda x: x not in [''] ,list(map(lambda x: x.translate(str.maketrans('', '', punctuation_characters)), text_lists))))\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "40431035-a0f4-4fed-b13b-b440838db856"
+					}
+				},
+				"source": [
+					"data['Q8_preprocessed'] = data['Q8_preprocessed'].apply(remove_punctuation)"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "bdb26b18-9c42-4c37-9f2b-7f5237b8ab00"
+					}
+				},
+				"source": [
+					"def pos_tag_token(sentence):\n",
+					"  return [(token.text, token.pos_) for token in spacy_obj(sentence)]"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "bb53a8d6-839d-4475-b842-5e072d345c81"
+					}
+				},
+				"source": [
+					"data['Q8_pos'] = data['Q8_preprocessed'].apply(lambda x: [pos_tag_token(y) for y in x])"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "d00d4943-3a6e-4e89-8383-2109032790ec"
+					}
+				},
+				"source": [
+					"data['Q8_phrases'] = data['Q8_pos'].apply(lambda x: [get_phrases(y) for y in x])"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "8daa03f4-f3af-4d6d-918c-57408943b328"
+					}
+				},
+				"source": [
+					"data['Q8_subject'] = data['Q8_pos'].apply(lambda x: [get_subjects(y) for y in x])"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "d7e6d19c-3b95-4358-b0b1-28555f0ecc75"
+					}
+				},
+				"source": [
+					"sentiment_analysis_binary_classifier = pipeline(\"sentiment-analysis\")\n",
+					"sentiment_multilingual = pipeline(\"sentiment-analysis\",model='nlptown/bert-base-multilingual-uncased-sentiment')\n",
+					"\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "f8a68c5b-4117-4adf-99e8-3c89c8243e60"
+					}
+				},
+				"source": [
+					"def classify_sentences_binary(sentence):\n",
+					"    return sentiment_analysis_binary_classifier(sentence)[0]['label']"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "347f2b5e-b103-445d-bb44-21bdaf1bb097"
+					}
+				},
+				"source": [
+					"def classify_sentences_multilingual(sentence):\n",
+					"    return sentiment_multilingual(sentence)[0]['label']\n",
+					"\n",
+					"#data['Q8_sentiment'] = data['Q8_preprocessed'].apply(lambda x: [classify_sentences_multilingual(y) for y in x])\n",
+					"#data['Q8_sentiment'] = data['Q8_sentiment'].apply(lambda x: ['NEGATIVE' if y in ['1 stars', '2 stars'] else 'POSITIVE' for y in x])\n",
+					"\n",
+					"data['Q8_length'] = data['Q8_preprocessed'].apply(lambda x: len(x))\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "7e911a1c-c8c1-4510-a4c9-f71510e21c71"
+					}
+				},
+				"source": [
+					"data['Q8_sentiment'] = data['Q8_preprocessed'].apply(lambda x: [classify_sentences_binary(y) for y in x])"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "70506198-2b8e-4c9c-81d7-9b1f6ac4acf6"
+					}
+				},
+				"source": [
+					"data[['Q8_sentiment', 'Q8_phrases', 'Q8_subject']]"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "f672ac8e-a25a-40af-aeaa-3cb3658f71f4"
+					}
+				},
+				"source": [
+					"def flatten_values(col):\n",
+					"  return ', '.join(list(itertools.chain(*[list(x) for x in  col])))"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "5541384f-6514-4db6-8775-0cb79d40a4f9"
+					}
+				},
+				"source": [
+					"def create_positive_negative_columns(col):\n",
+					"  col = list(zip(col[0],col[1]))\n",
+					"  dic = {}\n",
+					"  for i, j in col:\n",
+					"    dic.setdefault(i,[]).append(j)\n",
+					"  if \"POSITIVE\" in dic:\n",
+					"    dic['POSITIVE'] = ', '.join(list(itertools.chain(*[list(x) for x in dic['POSITIVE'] ])))\n",
+					"  if \"NEGATIVE\" in dic:\n",
+					"    dic['NEGATIVE'] = ', '.join(list(itertools.chain(*[list(x) for x in dic['NEGATIVE'] ])))\n",
+					"  return dic"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "16621750-f554-4fec-8323-45730e1f9f86"
+					}
+				},
+				"source": [
+					"def final_post_process(df, col1, suffix):\n",
+					"  data1 = df.copy()\n",
+					"  data1['temp'] = data1[['Q8_sentiment', col1]].apply(tuple, axis=1)\n",
+					"  data1['temp'] = data1['temp'].apply(create_positive_negative_columns)\n",
+					"  data1 = pd.concat([data1.drop(['temp'], axis=1), data1['temp'].apply(pd.Series)], axis=1)\n",
+					"  d1 = data1[['UNIQUE_SURVEY_ID', 'POSITIVE', 'NEGATIVE']]\n",
+					"  d1.columns = ['UNIQUE_SURVEY_ID', 'positive_'+suffix, 'negative_'+suffix]\n",
+					"  return pd.merge(data,d1)\n",
+					"  "
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "1d9c8696-3042-46e9-b06b-22624975c7ba"
+					}
+				},
+				"source": [
+					"data = final_post_process(data, 'Q8_phrases', 'phrases')"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "239d00e8-c6b1-4367-b98c-0674574931fa"
+					}
+				},
+				"source": [
+					"data = final_post_process(data, 'Q8_subject', 'subject')"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "5abfe9d3-695f-4afa-ae72-493cfefa14b6"
+					}
+				},
+				"source": [
+					"selected_df = data[['Q8', 'positive_phrases', 'negative_phrases', 'positive_subject', 'negative_subject']]"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "d18070d2-f1da-4c76-9b3c-d99627c532d8"
+					}
+				},
+				"source": [
+					"display(selected_df.fillna(' '))"
+				],
+				"attachments": null,
+				"execution_count": 0
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"application/vnd.databricks.v1+cell": {
+						"title": "",
+						"showTitle": false,
+						"nuid": "c02358a5-563b-4803-adee-5b90be5a6515"
+					}
+				},
+				"source": [
+					""
+				],
+				"attachments": null,
+				"execution_count": 0
+			}
+		]
+	}
+}

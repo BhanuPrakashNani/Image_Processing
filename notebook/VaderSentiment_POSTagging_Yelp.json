@@ -1,0 +1,690 @@
+{
+	"name": "VaderSentiment_POSTagging_Yelp",
+	"properties": {
+		"folder": {
+			"name": "Patient Experience"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "PatientExp",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/cbadd11e-0445-4ba0-91ab-56abcb4a2860/resourceGroups/rg-advancedcomputingplatform/providers/Microsoft.Synapse/workspaces/syn-advcomptest/bigDataPools/PatientExp",
+				"name": "PatientExp",
+				"type": "Spark",
+				"endpoint": "https://syn-advcomptest.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/PatientExp",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 10,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "scala"
+					}
+				},
+				"source": [
+					"%%spark\n",
+					"val df = spark.read.sqlanalytics(\"advcompplatsql.dbo.FactYelpReviews\")\n",
+					"//df.write.mode(\"overwrite\").saveAsTable(\"default.t1\")\n",
+					"df.createOrReplaceTempView(\"factyelpreviews\")"
+				],
+				"attachments": null,
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"py_df = spark.sql(\"select * from factyelpreviews\")"
+				],
+				"attachments": null,
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"from tensorflow.keras.models import load_model\r\n",
+					"import re\r\n",
+					"import pickle\r\n",
+					"from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer\r\n",
+					"import pandas as pd\r\n",
+					"import spacy\r\n",
+					"import numpy as np\r\n",
+					"spacy_obj = spacy.load(\"en_core_web_sm\")\r\n",
+					"sid_obj = SentimentIntensityAnalyzer()\r\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 3
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"data = py_df[['review_id','business_id','name','review']]"
+				],
+				"attachments": null,
+				"execution_count": 4
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"data = data.toPandas()"
+				],
+				"attachments": null,
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"data"
+				],
+				"attachments": null,
+				"execution_count": 6
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"def remove_stop_words(tokens):\r\n",
+					"    stopwordslist= ['','a', 'an','am', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']\r\n",
+					"    words = [item for item in tokens if item not in stopwordslist]\r\n",
+					"    return words\r\n",
+					"\r\n",
+					"def words_cleaner(word):\r\n",
+					"  word = re.sub('[^a-zA-Z0-9 \\n\\.]', '', word)\r\n",
+					"  return word"
+				],
+				"attachments": null,
+				"execution_count": 7
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"def extract_pos_tagger(sentences):\r\n",
+					"  positive,negative=[],[]\r\n",
+					"  sentiments={}\r\n",
+					"  pos_sub,neg_sub=[],[]\r\n",
+					"  for sentence in sentences.split('.'):\r\n",
+					"    doc=spacy_obj(sentence)\r\n",
+					"    sentiment=sid_obj.polarity_scores(sentence)\r\n",
+					"    if (sentiment['pos']>=sentiment['neg'] and sentiment['compound']>=0):sentiment=1\r\n",
+					"    else:sentiment=0\r\n",
+					"      \r\n",
+					"    sent=[]\r\n",
+					"    for token in doc:\r\n",
+					"      if (token.pos_=='ADJ'):\r\n",
+					"        phrase =''\r\n",
+					"        for sub_tok in token.lefts:\r\n",
+					"          if ((sub_tok.pos_ in (['ADV','PART','VERB']))):\r\n",
+					"            phrase += sub_tok.text\r\n",
+					"            if sub_tok.text in sent: sent.remove(sub_tok.text)\r\n",
+					"            phrase += ' '+token.text \r\n",
+					"            sent.append(phrase)\r\n",
+					"          if phrase =='':\r\n",
+					"            sent.append(token.text)\r\n",
+					"#           elif token.pos_ in ['ADV']:\r\n",
+					"#             sent.append(token.text)\r\n",
+					"          #if (token.dep_=='nsubj')&(token.is_stop==False):\r\n",
+					"      if (token.pos_ == 'NOUN') or (token.pos_ == 'PROPN'):\r\n",
+					"        if sentiment==1: \r\n",
+					"          pos_sub.append(words_cleaner(token.text))\r\n",
+					"        else:\r\n",
+					"          neg_sub.append(words_cleaner(token.text))\r\n",
+					"                \r\n",
+					"    if sentiment==1:positive.extend(sent)\r\n",
+					"    else:negative.extend(sent)\r\n",
+					"      \r\n",
+					"  sentiments['positive']=positive\r\n",
+					"  sentiments['negative']=negative\r\n",
+					"  sentiments['positive_subject'] = remove_stop_words(pos_sub)\r\n",
+					"  sentiments['negative_subject']= remove_stop_words(neg_sub)\r\n",
+					"  return sentiments\r\n",
+					"\r\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 8
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"extract_pos_tagger(\"Had a great experience with Providence. Was able to register before I got to the locattion which made registration quick and easy. The were able to get me in a little early and was immediately triaged. The wait for the Physician was not too bad. The Dr perforand was immediately triaged. The wait for the Physician was not too bad. The Dr performed my entire treatment and was nothing less than amazing at making me feel comfortable.med my entire treatment and was nothing less than amazing at making me feel comfortable.\")"
+				],
+				"attachments": null,
+				"execution_count": 9
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"def classify_sentiments_compound(sentiment_dict):\r\n",
+					"    if sentiment_dict['compound'] >= 0.05 :\r\n",
+					"        return 1\r\n",
+					"    elif sentiment_dict['compound'] <= - 0.05 :\r\n",
+					"        return 0\r\n",
+					"    else :\r\n",
+					"        return 1"
+				],
+				"attachments": null,
+				"execution_count": 10
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"data['vader_Sentiment']=data['review'].apply(lambda x: sid_obj.polarity_scores(x))\r\n",
+					"data['vader_SentimentPredictedCompound']=data['vader_Sentiment'].apply(lambda x: classify_sentiments_compound(x))"
+				],
+				"attachments": null,
+				"execution_count": 11
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"data['POS'] = data['review'].apply(lambda x: extract_pos_tagger(x))\r\n",
+					"data=pd.concat([data.drop(['POS'], axis=1), data['POS'].apply(pd.Series)], axis=1)\r\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 12
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"data"
+				],
+				"attachments": null,
+				"execution_count": 13
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"# display(spark.createDataFrame(data.head(750).astype(str)))"
+				],
+				"attachments": null,
+				"execution_count": 14
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"# display(spark.createDataFrame(data.tail(826).astype(str)))"
+				],
+				"attachments": null,
+				"execution_count": 15
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"data.to_csv('Dataset.csv')"
+				],
+				"attachments": null,
+				"execution_count": 16
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"spark_df = spark.createDataFrame(data.astype(str))"
+				],
+				"attachments": null,
+				"execution_count": 17
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"print(spark_df.count(), len(spark_df.columns))"
+				],
+				"attachments": null,
+				"execution_count": 18
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"# spark_df.repartition(1).write.csv('abfss://synapse@dlsadvcomptest.dfs.core.windows.net/PatientExperience/Yelp/Sentiment_POSTagging_Yelp.csv', header=True)"
+				],
+				"attachments": null,
+				"execution_count": 19
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"dropcolumns = ['review', 'business_id', 'name']\r\n",
+					"datawithoutreviews = data.drop(dropcolumns, axis=1)"
+				],
+				"attachments": null,
+				"execution_count": 58
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"datawithoutreviews"
+				],
+				"attachments": null,
+				"execution_count": 59
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"cols = ['positive', 'negative', 'positive_subject', 'negative_subject']\r\n",
+					"# datawithoutreviews[cols] = datawithoutreviews[cols].str.replace('[','')\r\n",
+					"# datawithoutreviews[cols] = datawithoutreviews[cols].str.replace(']','')\r\n",
+					"datawithoutreviews['positive'] = datawithoutreviews['positive'].astype(str)\r\n",
+					"datawithoutreviews['positive'] = datawithoutreviews['positive'].str.replace('[','')\r\n",
+					"datawithoutreviews['positive'] = datawithoutreviews['positive'].str.replace(']','')\r\n",
+					"datawithoutreviews['positive'] = datawithoutreviews['positive'].str.replace('\\'','')\r\n",
+					"\r\n",
+					"\r\n",
+					"datawithoutreviews['negative'] = datawithoutreviews['negative'].astype(str)\r\n",
+					"datawithoutreviews['negative'] = datawithoutreviews['negative'].str.replace('[','')\r\n",
+					"datawithoutreviews['negative'] = datawithoutreviews['negative'].str.replace(']','')\r\n",
+					"datawithoutreviews['negative'] = datawithoutreviews['negative'].str.replace('\\'','')\r\n",
+					"\r\n",
+					"datawithoutreviews['positive_subject'] = datawithoutreviews['positive_subject'].astype(str)\r\n",
+					"datawithoutreviews['positive_subject'] = datawithoutreviews['positive_subject'].str.replace('[','')\r\n",
+					"datawithoutreviews['positive_subject'] = datawithoutreviews['positive_subject'].str.replace(']','')\r\n",
+					"datawithoutreviews['positive_subject'] = datawithoutreviews['positive_subject'].str.replace('\\'','')\r\n",
+					"\r\n",
+					"datawithoutreviews['negative_subject'] = datawithoutreviews['negative_subject'].astype(str)\r\n",
+					"datawithoutreviews['negative_subject'] = datawithoutreviews['negative_subject'].str.replace('[','')\r\n",
+					"datawithoutreviews['negative_subject'] = datawithoutreviews['negative_subject'].str.replace(']','')\r\n",
+					"datawithoutreviews['negative_subject'] = datawithoutreviews['negative_subject'].str.replace('\\'','')\r\n",
+					"\r\n",
+					"datawithoutreviews"
+				],
+				"attachments": null,
+				"execution_count": 60
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"spark_df2 = spark.createDataFrame(datawithoutreviews.astype(str))"
+				],
+				"attachments": null,
+				"execution_count": 61
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"spark_df2.createOrReplaceTempView(\"temp\")"
+				],
+				"attachments": null,
+				"execution_count": 62
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "scala"
+					},
+					"collapsed": true
+				},
+				"source": [
+					"%%spark\r\n",
+					"val new_df = spark.sql(\"select * from temp\")"
+				],
+				"attachments": null,
+				"execution_count": 63
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "scala"
+					},
+					"collapsed": true
+				},
+				"source": [
+					"%%spark\r\n",
+					"new_df.write.sqlanalytics(\"advcompplatsql.dbo.Sentiments\", Constants.INTERNAL)"
+				],
+				"attachments": null,
+				"execution_count": 64
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					""
+				],
+				"attachments": null,
+				"execution_count": null
+			}
+		]
+	}
+}

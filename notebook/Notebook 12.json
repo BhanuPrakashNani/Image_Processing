@@ -1,0 +1,605 @@
+{
+	"name": "Notebook 12",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "PatientExp",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/cbadd11e-0445-4ba0-91ab-56abcb4a2860/resourceGroups/rg-advancedcomputingplatform/providers/Microsoft.Synapse/workspaces/syn-advcomptest/bigDataPools/PatientExp",
+				"name": "PatientExp",
+				"type": "Spark",
+				"endpoint": "https://syn-advcomptest.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/PatientExp",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 10,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "scala"
+					}
+				},
+				"source": [
+					"%%spark\r\n",
+					"val df = spark.read.sqlanalytics(\"advcompplatsql.dbo.FactYelpReviews\")\r\n",
+					"//df.write.mode(\"overwrite\").saveAsTable(\"default.t1\")\r\n",
+					"df.createOrReplaceTempView(\"factyelpreviews\")"
+				],
+				"attachments": null,
+				"execution_count": 36
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"py_df = spark.sql(\"select * from factyelpreviews\")"
+				],
+				"attachments": null,
+				"execution_count": 37
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"# from transformers import pipeline\r\n",
+					"import pandas as pd\r\n",
+					"import numpy as np\r\n",
+					"import gc\r\n",
+					"import pickle\r\n",
+					"import matplotlib.pyplot as plt\r\n",
+					"import operator\r\n",
+					"import seaborn as sns\r\n",
+					"#from wordcloud import WordCloud,STOPWORDS\r\n",
+					"from collections import Counter\r\n",
+					"from nltk.corpus import stopwords\r\n",
+					"from nltk.tokenize import RegexpTokenizer \r\n",
+					"import time\r\n",
+					"import io\r\n",
+					"from tqdm import tqdm\r\n",
+					"import os, re, csv, math, codecs\r\n",
+					"import nltk.data\r\n",
+					"import nltk\r\n",
+					"from nltk import pos_tag\r\n",
+					"import pickle\r\n",
+					"from nltk.tokenize import word_tokenize, sent_tokenize"
+				],
+				"attachments": null,
+				"execution_count": 38
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"data = py_df[['review_id','business_id','name','review']]"
+				],
+				"attachments": null,
+				"execution_count": 39
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"data = data.toPandas()"
+				],
+				"attachments": null,
+				"execution_count": 40
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"data"
+				],
+				"attachments": null,
+				"execution_count": 41
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"import warnings\r\n",
+					"warnings.filterwarnings(\"ignore\")"
+				],
+				"attachments": null,
+				"execution_count": 42
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"import spacy\r\n",
+					"spacy_obj = spacy.load(\"en_core_web_sm\")"
+				],
+				"attachments": null,
+				"execution_count": 43
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"adjective_grammar = \"\"\"\r\n",
+					"    AP: \r\n",
+					"    {<PART>*<ADV>*<ADJ>+}\r\n",
+					"    \"\"\"\r\n",
+					"adj_chunk = nltk.RegexpParser(adjective_grammar)"
+				],
+				"attachments": null,
+				"execution_count": 44
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"noun_grammar = \"\"\"\r\n",
+					"    NP: {<NOUN>+}\r\n",
+					"    {<PROPN>+}\r\n",
+					"    \"\"\"\r\n",
+					"\r\n",
+					"noun_chunk = nltk.RegexpParser(noun_grammar)"
+				],
+				"attachments": null,
+				"execution_count": 45
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"def get_subjects(sentence):\r\n",
+					"  noun_detected = []\r\n",
+					"  tree = noun_chunk.parse(sentence)\r\n",
+					"  for subtree in tree.subtrees():\r\n",
+					"    if subtree.label() == 'NP':\r\n",
+					"      t = subtree\r\n",
+					"      t = ' '.join(word for word, tag in t.leaves())\r\n",
+					"      noun_detected.append(t)\r\n",
+					"  return noun_detected"
+				],
+				"attachments": null,
+				"execution_count": 46
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"def get_phrases(sentence):\r\n",
+					"  adjectives_detected = []\r\n",
+					"  tree = adj_chunk.parse(sentence)\r\n",
+					"  for subtree in tree.subtrees():\r\n",
+					"    if subtree.label() == 'AP':\r\n",
+					"      t = subtree\r\n",
+					"      t = ' '.join(word for word, tag in t.leaves())\r\n",
+					"      adjectives_detected.append(t)\r\n",
+					"  return adjectives_detected"
+				],
+				"attachments": null,
+				"execution_count": 47
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"def do_the_preprocessing(text):\r\n",
+					"  if (((text is not np.nan) and (text.lower().strip() in (['no','none','n/a','n/ a', 'na']))) or (text is np.nan) or (''.__eq__(text))): \r\n",
+					"    return ' '\r\n",
+					"  if len(text.lower().strip())<=2:\r\n",
+					"    return ' '\r\n",
+					"  else:\r\n",
+					"    return text.strip()"
+				],
+				"attachments": null,
+				"execution_count": 48
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"import re\r\n",
+					"def decontracted_preprocessing(phrase):\r\n",
+					"    # specific\r\n",
+					"    phrase = re.sub(r\"won\\'t\", \"will not\", phrase)\r\n",
+					"    phrase = re.sub(r\"can\\'t\", \"can not\", phrase)\r\n",
+					"\r\n",
+					"    # general\r\n",
+					"    phrase = re.sub(r\"n\\'t\", \" not\", phrase)\r\n",
+					"    phrase = re.sub(r\"\\'re\", \" are\", phrase)\r\n",
+					"    phrase = re.sub(r\"\\'s\", \" is\", phrase)\r\n",
+					"    phrase = re.sub(r\"\\'d\", \" would\", phrase)\r\n",
+					"    phrase = re.sub(r\"\\'ll\", \" will\", phrase)\r\n",
+					"    phrase = re.sub(r\"\\'t\", \" not\", phrase)\r\n",
+					"    phrase = re.sub(r\"\\'ve\", \" have\", phrase)\r\n",
+					"    phrase = re.sub(r\"\\'m\", \" am\", phrase)\r\n",
+					"    return phrase"
+				],
+				"attachments": null,
+				"execution_count": 49
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"data['review_preprocessed'] = data['review'].apply(do_the_preprocessing)"
+				],
+				"attachments": null,
+				"execution_count": 50
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"data['review_preprocessed'] = data['review_preprocessed'].apply(decontracted_preprocessing)"
+				],
+				"attachments": null,
+				"execution_count": 51
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"def split_tokens(sentences):\r\n",
+					"  return sent_tokenize(sentences)\r\n",
+					"\r\n",
+					"data['review_preprocessed'] = data['review_preprocessed'].apply(split_tokens)"
+				],
+				"attachments": null,
+				"execution_count": 52
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"punctuation_characters = '''‘!”#$%'()*+,-:;?@[\\]^_`{|}~’'''\r\n",
+					"\r\n",
+					"def remove_punctuation(text_lists):\r\n",
+					"    \"\"\"custom function to remove the punctuation\"\"\"\r\n",
+					"    text_lists = list(map(lambda x: x.replace('&', ' and '), text_lists))\r\n",
+					"    text_lists = list(map(lambda x: x.lower(), text_lists))\r\n",
+					"    return list(filter(lambda x: x not in [''] ,list(map(lambda x: x.translate(str.maketrans('', '', punctuation_characters)), text_lists))))\r\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"data['review_preprocessed'] = data['review_preprocessed'].apply(remove_punctuation)"
+				],
+				"attachments": null,
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"def pos_tag_token(sentence):\r\n",
+					"  return [(token.text, token.pos_) for token in spacy_obj(sentence)]"
+				],
+				"attachments": null,
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"data['POS'] = data['review_preprocessed'].apply(lambda x: [pos_tag_token(y) for y in x])"
+				],
+				"attachments": null,
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"data['Phrases'] = data['POS'].apply(lambda x: [get_phrases(y) for y in x])"
+				],
+				"attachments": null,
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"data['Subject'] = data['POS'].apply(lambda x: [get_subjects(y) for y in x])"
+				],
+				"attachments": null,
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"data"
+				],
+				"attachments": null,
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"attachments": null,
+				"execution_count": null
+			}
+		]
+	}
+}

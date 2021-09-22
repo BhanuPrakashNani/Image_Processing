@@ -1,0 +1,52 @@
+{
+	"name": "Src_YelpReview",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "syn-advcomptest-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "yelp_academic_dataset_review.json",
+				"folderPath": "PatientExperience/Yelp",
+				"fileSystem": "synapse"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"review_id": {
+					"type": "string"
+				},
+				"user_id": {
+					"type": "string"
+				},
+				"business_id": {
+					"type": "string"
+				},
+				"stars": {
+					"type": "number"
+				},
+				"useful": {
+					"type": "integer"
+				},
+				"funny": {
+					"type": "integer"
+				},
+				"cool": {
+					"type": "integer"
+				},
+				"text": {
+					"type": "string"
+				},
+				"date": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

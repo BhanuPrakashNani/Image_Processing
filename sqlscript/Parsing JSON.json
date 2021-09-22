@@ -1,0 +1,20 @@
+{
+	"name": "Parsing JSON",
+	"properties": {
+		"folder": {
+			"name": "Patient Experience"
+		},
+		"content": {
+			"query": "SELECT\n        JSON_VALUE (jsonContent, '$.business_id') AS business_id\n       ,JSON_VALUE (jsonContent, '$.name') AS name\n       ,JSON_VALUE (jsonContent, '$.city') AS city\n       ,JSON_VALUE (jsonContent, '$.state') AS state\n       ,JSON_VALUE (jsonContent, '$.postal_code') AS postal_code\n       ,JSON_VALUE (jsonContent, '$.latitude') AS latitude\n       ,JSON_VALUE (jsonContent, '$.longitude') AS longitude\n       ,JSON_VALUE (jsonContent, '$.stars') AS stars\n\nFROM\n    OPENROWSET(\n        BULK 'https://dlsadvcomptest.dfs.core.windows.net/synapse/PatientExperience/Yelp/yelp_academic_dataset_business.json',\n        FORMAT = 'CSV',\n        FIELDQUOTE = '0x0b',\n        FIELDTERMINATOR ='0x0b'--,\n        --ROWTERMINATOR = '0x0b'\n    )\n    WITH (\n        jsonContent varchar(8000)\n    ) AS [result]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

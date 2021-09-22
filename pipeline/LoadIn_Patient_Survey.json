@@ -1,0 +1,599 @@
+{
+	"name": "LoadIn_Patient_Survey",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*.*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"allowCopyCommand": true
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "SURVEYID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SURVEYID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SURVEYTYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SURVEYTYPE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ORGANIZATION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ORGANIZATION",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REGION_ACRONYM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "REGION_ACRONYM",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REGION_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "REGION_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FACILITY_ACRONYM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FACILITY_ACRONYM",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FACILITY_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FACILITY_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FACILITY_TYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FACILITY_TYPE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STATE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "STATE_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STATE_NM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "STATE_NM",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CLIENTID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CLIENTID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "AGE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AGE",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "SEX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SEX",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITADMDAT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITADMDAT",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITDISDAT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITDISDAT",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITCITY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITCITY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITSTATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITSTATE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "LANGUAGE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LANGUAGE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTADMI",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTADMI",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTDISC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTDISC",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTHOSP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTHOSP",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTICU",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTICU",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTLABO",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTLABO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTMEAL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTMEAL",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTNURS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTNURS",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTOVER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTOVER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTPERS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTPERS",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTPHYS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTPHYS",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTROOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTROOM",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTTNT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTTNT",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SECTVNF",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SECTVNF",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_6",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_6",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_7",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_7",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_8",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_8",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_37",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_37",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_37CL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_37CL",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_13",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_13",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_13CL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_13CL",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_21",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_21",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_22",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_22",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_33",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_33",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_33CL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_33CL",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_19",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_19",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_19CL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_19CL",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_39",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_39",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_40",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_40",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_10",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_10",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_11",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_11",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_23",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_23",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CMS_24\r",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CMS_24",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Src_InPatient_PipeDelimited",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Tgt_StgIn_Patient_Survey",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-08-31T08:41:48Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

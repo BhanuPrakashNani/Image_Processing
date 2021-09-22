@@ -1,0 +1,176 @@
+{
+	"name": "Notebook 10",
+	"properties": {
+		"folder": {
+			"name": "Patient Experience"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "PatientExp",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1",
+				"state": {
+					"6f65535e-b061-4e5e-92f2-0679c7420c5d": {
+						"type": "Synapse.DataFrame",
+						"sync_state": {
+							"table": {
+								"rows": [
+									{
+										"0": "*Spoilers - sorry!* The first word that sprung to mind whilst watching the film is 'Gremlins'. It's the only critters movie I have seen from the four movies, but I enjoyed it. It wasn't too complicated as I hadn't seen the past two, but I thought it was quite a good movie all the same. <br /><br />Critters starts with a man, his son and daughter stopping off on the way to a vacation (although it turns out that they end up at their own home - which I have no idea what the hell went on) The girl meets up with a boy (played by Leo DiCaprio) and they go hang out in a nearby forest. They meet this weird guy who tells them to be careful and stuff because of the critters. He seems a bit psychotic and if I was in that situation, I would not speak to him. The critters steal a ride of the girl and boy's car and end up in their flat thing. They hide out in the basement and end up killing this lazy jerk. They then nearly kill this fat woman and the girl's dad. They are chased higher and higher up the flat until they hide in the attic. The critters eat stuff in the kitchen (Spoof of the gremlins kitchen scene???!) And I can't remember (not a good thing) but I'm sure they have to go back for something/someone. Anyway they end up getting out and saved. The psychotic guy comes back and before he kills the last two critters he is told he can't because they are endangered and so he sends them home.<br /><br />The ending was disappointing and I was annoyed that only the lazy guy died as there were quite a few annoying characters I would personally have killed off. It's a thrilling, exciting movie worth a watch. But, if you're looking for a better version of this genre I recommend the gremlins movies. Sorry!",
+										"1": "negative"
+									},
+									{
+										"0": "This film is an excellent military movie. It may not be an excellent Hollywood Movie, but that does not matter. Hollywood has a reputation of sacrificing accuracy for good entertainment, but that is not the case with this movie. Other reviewers have found this movie to be too slow for their taste, but  as a retired Soldier  I appreciate the pace the movie crew deliberately took to tell their story as completely as possible given the two hours and nine minutes allotted. The story itself has been told and retold several times over, but it remains for a professional soldier  and an African American at that  to report on the story as presented by the movie crew, and as it presents the US Navy to the world. The story of Brashear's work to become a Navy Diver, and his life as a Navy Diver beyond his graduation, is not the only story that is presented. There I also the story of how Master Chief Petty Officer Sunday defied the illegal order of his Commanding Officer that Petty Officer 2nd Class Brashear not be passed in his test dive no matter how well he did, and paid the price of a loss of one Stripe and a change of assignment. It also told the true story how Brashear found the third Hydrogen Bombs lost in the Atlantic Ocean off the coast of Spain in the 1950's, and how he saved the life of another seaman who was in the line of the snapped running line that would have snapped him in two if Brashear had not shoved him out of the way and took the shot himself. This was a complex story that was worth telling, and I will admit that two hours and nine minutes was not enough to tell the full story, and I can tell from the deleted scenes on the DVD that the crew tried their best to tell a story as full as possible. As a professional soldier, I was proud to see such a great story told in such a comprehensive manner, and to see the traditions and honor of the navy preserved in such a natural and full manner.",
+										"1": "positive"
+									},
+									{
+										"0": "\"I've always been a fan of Jackass, as well as Viva La Bam and Wildboyz. And when you're a fan of something, your expectations are high to whatever your \"\"heroes\"\" might star in. And if there's one thing I've learned about expecting a lot from the people you simply love to watch and listen to",
+										"1": " it's never to expect to much"
+									},
+									{
+										"0": "\"A lot of other reviewers here, including many whose opinions I respect, hold this slice of European sleaze horror in high regard. Personally, I didn't like it at all. Its an incoherent attempt at a atmospheric period cross between sex and violence. Jess Franco at his best makes these kinds of films very well. Unfortunately, the infamous exploitation filmmaker Joe D'Amato does not. D'Amato's most well known films are infamous for their high gross-out quotient. This, an early film by him, doesn't have the constant disgusting scenes that his more notorious \"\"Anthropophagous\"\" and \"\"Beyond the Darkness\"\" did. Ultimately",
+										"1": " its an incoherent film that doesn't manage to involve the viewer in any way. Without the sleaze factor either"
+									},
+									{
+										"0": "\"1 let's suspend belief for a moment and let's stop pretending we could, might or ought know \"\"how it is\"\" or \"\"ought to be\"\" there in space. Human knowledge in that area is probably primitive as say middle ages maps are compared to today's satellite maps",
+										"1": " so we really have no clue. 2 considering this is \"\"just\"\" a BBC TV docu-simulation"
+									},
+									{
+										"0": "THE SECRET OF KELLS may be the most exquisite film I have seen since THE TRIPLETS OF BELLEVILLE. Although stylistically very different, KELLS shares with TRIPLETS and (the jaw-dropping opening 2D sequence of) KUNG FU PANDA, incredible art direction, production design, background/layout and a richness in color that is a feast for one's senses. KELLS is so lavish -- almost Gothic in its layout (somewhat reminiscent of Klimt), wonderfully flat in general overall perspective, ornate in its Celtic & illuminated design, yet the characters are so simplistic and appealing -- AND it all works together beautifully. You fall in love with the characters from the moment you meet them. You are so drawn to every detail of the story and to every stroke of the pencil & brush. What Tomm, Nora, Ross, Paul and all at Cartoon Saloon (& their extended crews) have achieved with this small budget/VERY small crewed film, is absolutely astounding. The groundswell of support amongst our animation community is phenomenal. This film is breathtaking and the buzz amongst our colleagues in recommending this film is spreading like wildfire. Congratulations to KELLS on its many accolades, its Annie nomination as well as its current Oscar qualifying run. They are all very well-deserved nods, indeed...",
+										"1": "positive"
+									},
+									{
+										"0": "\"The first time I saw this \"\"film\"\" I loved it. When I was 11",
+										"1": " I was more interested in the music and dancing. As I've grown older"
+									},
+									{
+										"0": "\"Below average movie with poor music considering a movie based on music??? Ordinary Script & Direction with full of blunders. Salman Khan was at his usual acting. Ajay's performance deteriorating with time as his looks,especially his styles as a Rock Star were pathetic. Asin was just a showpiece only. Overall I felt like wasting my money in cinema. Salman Khan remains as immature as 10 years ago compared to Aamir Khan. There were many songs in the movie all boring except \"\"Man Ko Ati\"\". The Most Important Song to impress the UK Music Sponsor was most unimpressive. \"\"Khanabadosh\"\" can be very easily understood by an English Music Sponsor. The other movie I saw last week was \"\"Wake Up Sid\"\" which was simple slow love story with good direction & acting despite average music\"",
+										"1": "negative"
+									},
+									{
+										"0": "It sounded so promising in the Rental Store, the premise sounded great and I couldnt wait to get home and watch it. It was Apalling the Diologue is Dreadful, The Action is Extremely badly Scripted and the Plot takes a nosedive from the beginning. Gutenberg puts in a pathetic performance, Sean Bean tries his best but with a script this bad there wasnt much he could do.<br /><br />This isnt even worth watching, even if you can get it for free (borrow it off a friend for instance) Dont as you will regret it and waste 90 Minuites of your life.<br /><br />0/10",
+										"1": "negative"
+									},
+									{
+										"0": "Batman Returns It is my opinion that the first Batman of the Batman series was only half the movie that Batman Returns is. In the first Batman by Tim Burton we had only Batman and The Joker both played wonderfully by Michael Keaton and Jack Nicholson.<br /><br />In Batman Returns we have what I feel is the most perfectly cast Batman movie (yes even better then Dark Knight). Keaton returns as Batman and is perfect in the role never going to far over top with the character of Batman, which is perfect in this film when it comes to the two villains that he's up against. First you have Danny DeVito who is delightfully insane as the Penguin. Then you have Michelle Pfeiffer as Cat-Woman, who I dare to say is one of the most interesting and complex villains in the Batman movies. I feel this way about Pfeiffer because of the way she becomes the Cat-Woman she starts off as the rather pathetic mousy Selena Kyle and then truly dives into the dark side of her mind and what you get is a brilliant performance of a woman who goes from trying to be a hero to a villain and then I suppose back to a hero in the end. Also in this amazing cast you have the evil businessman Max Schreck played by the amazing and legendary Christopher Walken. While in a supporting role there's something about this role that I love and maybe it's the look of Schreck in the film that makes his performance all the better then it already is.<br /><br />Story wise I have to say that Batman Returns has so much more going on this time around as opposed to the first Batman. Part of the reason I loved this story so much is the fact that Burton dared to go in a much more darker and twisted direction as opposed to Nicholson's over the top antics. You have the story on the Penguin and how he tries to deceive the people of Gotham into making him the new hero and mayor of the city. Then you have Cat-Woman and her struggle to decide just who she really is and what she should do with her new persona. When it comes to Batman I feel that in this one he's more the ring leader that holds the two stories together but of course kicking ass at the same time.<br /><br />Cinematography was the film is dark and atmospheric just like the story that's taking place within it. Gotham City never looked as good as it does on Blu-Ray and HD so if you have the chance to see it this way then by all means do because it truly adds to the overall experience of Batman Returns.<br /><br />So all in I truly feel that of all the Batman movies Batman Returns believe it or not tops the Dark Knight for me because while I enjoyed that movie for Heath Ledger's amazing performance as the Joker I felt that the movie was lacking something. Batman Returns lacks nothing, so if you want to see an amazing film with what I feel is a perfect cast then this is the Batman to light the Bat signal for.",
+										"1": "positive"
+									}
+								],
+								"schema": [
+									{
+										"key": "0",
+										"name": "_c0",
+										"type": "string"
+									},
+									{
+										"key": "1",
+										"name": "_c1",
+										"type": "string"
+									}
+								]
+							},
+							"isSummary": false,
+							"language": "scala"
+						},
+						"persist_state": {
+							"view": {
+								"type": "details",
+								"chartOptions": {
+									"chartType": "bar",
+									"aggregationType": "count",
+									"categoryFieldKeys": [
+										"0"
+									],
+									"seriesFieldKeys": [
+										"0"
+									],
+									"isStacked": false
+								}
+							}
+						}
+					}
+				}
+			},
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/cbadd11e-0445-4ba0-91ab-56abcb4a2860/resourceGroups/rg-advancedcomputingplatform/providers/Microsoft.Synapse/workspaces/syn-advcomptest/bigDataPools/PatientExp",
+				"name": "PatientExp",
+				"type": "Spark",
+				"endpoint": "https://syn-advcomptest.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/PatientExp",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 10,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\r\n",
+					"df = spark.read.load('abfss://synapse@dlsadvcomptest.dfs.core.windows.net/Test/IMDB Dataset.csv', format='csv'\r\n",
+					"## If header exists uncomment line below\r\n",
+					"##, header=True\r\n",
+					")\r\n",
+					"display(df.limit(10))"
+				],
+				"attachments": null,
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					""
+				],
+				"attachments": null,
+				"execution_count": null
+			}
+		]
+	}
+}

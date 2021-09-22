@@ -1,0 +1,236 @@
+{
+	"name": "Tgt_StgIn_Patient_Survey",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [
+			{
+				"name": "SURVEYID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SURVEYTYPE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ORGANIZATION",
+				"type": "nvarchar"
+			},
+			{
+				"name": "REGION_ACRONYM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "REGION_NAME",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FACILITY_ACRONYM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FACILITY_NAME",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FACILITY_TYPE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "STATE_CODE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "STATE_NM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CLIENTID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AGE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SEX",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ITADMDAT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ITDISDAT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ITCITY",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ITSTATE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LANGUAGE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTADMI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTDISC",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTER",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTHOSP",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTICU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTLABO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTMEAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTNURS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTOVER",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTPERS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTPHYS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTROOM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTTNT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SECTVNF",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_37",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_37CL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_13",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_13CL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_21",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_22",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_33",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_33CL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_19",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_19CL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_39",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_40",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_11",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_23",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CMS_24",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "StagingIN_PATIENT_SURVEY"
+		},
+		"sqlPool": {
+			"referenceName": "advcompplatsql",
+			"type": "SqlPoolReference"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

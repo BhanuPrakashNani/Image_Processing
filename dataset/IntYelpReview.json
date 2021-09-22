@@ -1,0 +1,55 @@
+{
+	"name": "IntYelpReview",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "syn-advcomptest-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "YelpReviews.csv",
+				"folderPath": "PatientExperience/Yelp",
+				"fileSystem": "synapse"
+			},
+			"columnDelimiter": "|",
+			"rowDelimiter": "\n",
+			"escapeChar": "\"",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "review_id",
+				"type": "String"
+			},
+			{
+				"name": "user_id",
+				"type": "String"
+			},
+			{
+				"name": "business_id",
+				"type": "String"
+			},
+			{
+				"name": "stars",
+				"type": "String"
+			},
+			{
+				"name": "useful",
+				"type": "String"
+			},
+			{
+				"name": "text",
+				"type": "String"
+			},
+			{
+				"name": "date",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

@@ -1,0 +1,129 @@
+{
+	"name": "YelpJSONtoCSV",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['review_id']"
+								},
+								"sink": {
+									"name": "review_id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user_id']"
+								},
+								"sink": {
+									"name": "user_id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['business_id']"
+								},
+								"sink": {
+									"name": "business_id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['stars']"
+								},
+								"sink": {
+									"name": "stars",
+									"type": "Single"
+								}
+							},
+							{
+								"source": {
+									"path": "$['useful']"
+								},
+								"sink": {
+									"name": "useful",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['text']"
+								},
+								"sink": {
+									"name": "text",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['date']"
+								},
+								"sink": {
+									"name": "date",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Src_YelpReview",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "IntYelpReview",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-09-01T05:03:29Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

@@ -1,0 +1,10 @@
+{
+	"name": "pe-CosmosdbSQLAPI-Analytical",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/cbadd11e-0445-4ba0-91ab-56abcb4a2860/resourceGroups/rg-advancedcomputingplatform/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-advcompplatform-test",
+		"groupId": "Analytical",
+		"fqdns": [
+			"1858204168262592240.blob.core.windows.net"
+		]
+	}
+}

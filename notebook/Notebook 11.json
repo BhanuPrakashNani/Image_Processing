@@ -1,0 +1,250 @@
+{
+	"name": "Notebook 11",
+	"properties": {
+		"folder": {
+			"name": "Patient Experience"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "PatientExpTest",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1",
+				"state": {
+					"b1f607fe-c783-47fc-a8d2-3035fe8ff313": {
+						"type": "Synapse.DataFrame",
+						"sync_state": {
+							"table": {
+								"rows": [
+									{
+										"0": "review_id",
+										"1": "business_id",
+										"2": "name",
+										"3": "review",
+										"4": "vader_Sentiment",
+										"5": "vader_SentimentPredictedCompound",
+										"6": "positive",
+										"7": "negative",
+										"8": "positive_subject",
+										"9": "negative_subject"
+									},
+									{
+										"0": "sGbE4IvxAMU8Wj7bwfEZ-A",
+										"1": "FJFkcuPzInk2gJWIEIk_fQ",
+										"2": "Providence St Vincent Medical Center",
+										"3": "The emergency dept staff are amazing!!  They really care about you and try to get you  treated as quickly as possible!  I came in for cutting off the tip of my finger and was sent back almost immediately.  They took great care of me and had me out of there ias sent back almost immediately.  They took great care of me and had me out of there in time for my guests I was have be over!  I would recommend st Vincent's ED to anyone!!n time for my guests I was have be over!  I would recommend st Vincent's ED to anyone!!",
+										"4": "{'neg': 0.033, 'neu': 0.741, 'pos': 0.226, 'compound': 0.9775}",
+										"5": "1",
+										"6": "[]",
+										"7": "[]",
+										"8": "['emergency', 'dept', 'staff', 'tip', 'finger', 'care', 'ias', 'care', 'time', 'guests', 'st', 'Vincent', 'ED', 'time', 'guests', 'st', 'Vincent', 'ED']",
+										"9": "[]"
+									},
+									{
+										"0": "fI8giVwJpbarYIQHprw84A",
+										"1": "TlvDgNeU4Ekl8jrVpbwTfA",
+										"2": "Providence Medical Group - Gateway Immediate Care",
+										"3": "It is much easier to pre sign into gettting an immediate care appointment."
+									},
+									{
+										"0": "Everyone was professional",
+										"1": " polite and iveryone was professional",
+										"2": " polite and informative. I appreciate the care. Thxsnformative. I appreciate the care. Thxs\"",
+										"3": "{'neg': 0.0, 'neu': 0.611, 'pos': 0.389, 'compound': 0.9501}",
+										"4": "1",
+										"5": "['much easier']",
+										"6": "[]",
+										"7": "['care', 'appointment', 'iveryone', 'care', 'care']",
+										"8": "[]"
+									},
+									{
+										"0": "ofoHhRTGsrQHdoerp8UUOA",
+										"1": "qXW0VeG_5mYv9yC7usK8hg",
+										"2": "Providence Medical Group Tanasbourne",
+										"3": "Came for drug testing. Was told I had to wait 30-45 minutes...... for a drug test. Not helpful. Was told I just had to wait when I came prepared and drank plenty of water beforehandit when I came prepared and drank plenty of water beforehand. Very rude and wished my company found someone better to use.. Very rude and wished my company found someone better to use.",
+										"4": "{'neg': 0.114, 'neu': 0.764, 'pos': 0.122, 'compound': -0.0818}",
+										"5": "0",
+										"6": "[]",
+										"7": "['Not helpful', 'Very rude', 'Very rude']",
+										"8": "['drug', 'testing', 'minutes', 'drug', 'test', 'plenty', 'water', 'beforehandit', 'plenty', 'water']",
+										"9": "['company', 'company']"
+									},
+									{
+										"0": "MT9VY5oVSxBdvCsdLNKi9Q",
+										"1": "TlvDgNeU4Ekl8jrVpbwTfA",
+										"2": "Providence Medical Group - Gateway Immediate Care",
+										"3": "Less than a stellar experience. I arrived a few minutes early for my appointment (7 am) and the doors were locked. The doctor was even unable to enter the building and has to go around to gain access. There was a nurse or a medical assistant in the entry lobby who refused to acknowledge me- I stood there in the chilly air for greater than 10 minutes while she continued to ignore me. She never made eye contact or tried to explain  why she wouldn't open the door. While I was waiting I get the text saying that I am late for my appointment and they might not be able to hold my spot. Lol "
+									},
+									{
+										"0": "Eventually at about 7:20 I was admitted into the lobby area- I was already masked. This person who had ignored me began asking questions- she was rude and unfriendly (I have been a RN for 37 years in direct patient care). There is no excuse for this unprofessional",
+										"1": " rude behavior. This person should not be working with the public in any way. "
+									},
+									{
+										"0": "In any case",
+										"1": " she handed me a paper and I was told to go sit in my car and wait for a phone call. I received a call about 5-7 minutes later and had to reverify my identity again. I was received in the tent finally and the doctor and MA were concerned and professional. "
+									},
+									{
+										"0": "Communication and customer service goes a long way. This could have been a positive experience iior. This person should not be working with the public in any way. "
+									},
+									{
+										"0": "In any case",
+										"1": " she handed me a paper and I was told to go sit in my car and wait for a phone call. I received a call about 5-7 minutes later and had to reverify my identity again. I was received in the tent finally and the doctor and MA were concerned and professional. "
+									}
+								],
+								"schema": [
+									{
+										"key": "0",
+										"name": "_c0",
+										"type": "string"
+									},
+									{
+										"key": "1",
+										"name": "_c1",
+										"type": "string"
+									},
+									{
+										"key": "2",
+										"name": "_c2",
+										"type": "string"
+									},
+									{
+										"key": "3",
+										"name": "_c3",
+										"type": "string"
+									},
+									{
+										"key": "4",
+										"name": "_c4",
+										"type": "string"
+									},
+									{
+										"key": "5",
+										"name": "_c5",
+										"type": "string"
+									},
+									{
+										"key": "6",
+										"name": "_c6",
+										"type": "string"
+									},
+									{
+										"key": "7",
+										"name": "_c7",
+										"type": "string"
+									},
+									{
+										"key": "8",
+										"name": "_c8",
+										"type": "string"
+									},
+									{
+										"key": "9",
+										"name": "_c9",
+										"type": "string"
+									}
+								]
+							},
+							"isSummary": false,
+							"language": "scala"
+						},
+						"persist_state": {
+							"view": {
+								"type": "details",
+								"chartOptions": {
+									"chartType": "bar",
+									"aggregationType": "count",
+									"categoryFieldKeys": [
+										"0"
+									],
+									"seriesFieldKeys": [
+										"0"
+									],
+									"isStacked": false
+								}
+							}
+						}
+					}
+				}
+			},
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/cbadd11e-0445-4ba0-91ab-56abcb4a2860/resourceGroups/rg-advancedcomputingplatform/providers/Microsoft.Synapse/workspaces/syn-advcomptest/bigDataPools/PatientExpTest",
+				"name": "PatientExpTest",
+				"type": "Spark",
+				"endpoint": "https://syn-advcomptest.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/PatientExpTest",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 3,
+				"cores": 8,
+				"memory": 56,
+				"extraHeader": null
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\r\n",
+					"df = spark.read.load('abfss://synapse@dlsadvcomptest.dfs.core.windows.net/PatientExperience/Yelp/Sentiment_POSTagging_Yelp.csv/part-00000-e2ecc98e-bf72-40c2-93ac-c745e3dba98b-c000.csv', format='csv'\r\n",
+					"## If header exists uncomment line below\r\n",
+					"##, header=True\r\n",
+					")\r\n",
+					"display(df.limit(10))"
+				],
+				"attachments": null,
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					""
+				],
+				"attachments": null,
+				"execution_count": null
+			}
+		]
+	}
+}
